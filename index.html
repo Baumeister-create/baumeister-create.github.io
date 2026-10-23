@@ -186,6 +186,17 @@
             display: block;
         }
 
+        /* Das Motto */
+        .hero-motto {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            line-height: 1.3;
+        }
+
         .hero-buttons {
             display: flex;
             gap: 1rem;
@@ -463,6 +474,28 @@
             transform: scale(1.05);
         }
 
+        /* --- Rhetorische Frage --- */
+        .rhetorical-question {
+            text-align: center;
+            padding: 6rem 2rem 2rem 2rem;
+        }
+
+        .rhetorical-question h2 {
+            border: none;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .rhetorical-question p {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+        }
+
         /* --- Contact & Footer --- */
         .social-links {
             display: flex;
@@ -635,6 +668,12 @@
                 <div class="hero-content">
                     <span class="hero-subtitle">Roblox Developer</span>
                     <h1>Scripting, Building & Gameplay</h1>
+                    
+                    <!-- Motto -->
+                    <div class="hero-motto">
+                        Imagine it. Build it. Make it real.
+                    </div>
+
                     <p style="font-size: 1.2rem; max-width: 600px;">I build and test Roblox game systems, work on game environments, and collaborate with other developers. I enjoy solving technical problems and improving my skills through practical projects.</p>
                     <div class="hero-buttons">
                         <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -782,43 +821,43 @@
         <section id="building">
             <div class="container">
                 <h2>Building & Level Design</h2>
-                <p style="max-width: 800px; margin-bottom: 2rem;">In addition to scripting, I have extensive experience in environment design and 3D modeling. I have built islands and detailed models (such as the subway station below) for <strong>ENM Studios</strong>. I also previously started a DDR RP project with a small team, which was eventually cancelled.</p>
+                <p style="max-width: 800px; margin-bottom: 2rem;">In addition to scripting, I have extensive experience in environment design and 3D modeling. Below are 6 distinct island environments I designed and built for <strong>ENM Studios</strong>. I also created a subway station environment for a smaller personal DDR RP project with friends, which was eventually cancelled.</p>
                 
                 <!-- Grid für die 7 Building-Bilder -->
                 <div class="building-grid">
                     <!-- Bild 1: Burg mit Portalkreis -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-castle.png', 'Detailed Castle and Portal Map')">
+                    <div class="showcase-item" onclick="openLightbox('images/build-castle.png', 'Detailed Castle and Portal Map (ENM Studios)')">
                         <img src="images/build-castle.png" alt="Detailed Castle and Portal Map" loading="lazy">
                     </div>
 
                     <!-- Bild 2: Insel mit Palmen und Kran -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-island.png', 'Tropical Island Level Design')">
+                    <div class="showcase-item" onclick="openLightbox('images/build-island.png', 'Tropical Island Level Design (ENM Studios)')">
                         <img src="images/build-island.png" alt="Tropical Island Level Design" loading="lazy">
                     </div>
 
                     <!-- Bild 3: Asiatische Insel -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-asian.png', 'Asian Themed Island Environment')">
+                    <div class="showcase-item" onclick="openLightbox('images/build-asian.png', 'Asian Themed Island Environment (ENM Studios)')">
                         <img src="images/build-asian.png" alt="Asian Themed Island Environment" loading="lazy">
                     </div>
 
                     <!-- Bild 4: Western Stadt -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-western.png', 'Western Town and NPC Setup')">
+                    <div class="showcase-item" onclick="openLightbox('images/build-western.png', 'Western Town and NPC Setup (ENM Studios)')">
                         <img src="images/build-western.png" alt="Western Town and NPC Setup" loading="lazy">
                     </div>
 
                     <!-- Bild 5 Schnee-Insel -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-snow.png', 'Snow Biome Island Design')">
+                    <div class="showcase-item" onclick="openLightbox('images/build-snow.png', 'Snow Biome Island Design (ENM Studios)')">
                         <img src="images/build-snow.png" alt="Snow Biome Island Design" loading="lazy">
                     </div>
 
                     <!-- Bild 6 Pirat am Kran -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-pirate.png', 'Pirate NPC and Crane Detail')">
+                    <div class="showcase-item" onclick="openLightbox('images/build-pirate.png', 'Pirate NPC and Crane Detail (ENM Studios)')">
                         <img src="images/build-pirate.png" alt="Pirate NPC and Crane Detail" loading="lazy">
                     </div>
 
-                    <!-- Bild 7 NEU: U-Bahn Station -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-subway.png', 'Subway Station Environment built for ENM Studios')">
-                        <img src="images/build-subway.png" alt="Subway Station Environment built for ENM Studios" loading="lazy">
+                    <!-- Bild 7 NEU: U-Bahn Station (DDR RP) -->
+                    <div class="showcase-item" onclick="openLightbox('images/build-subway.png', 'Subway Station Environment (Cancelled DDR RP Project)')">
+                        <img src="images/build-subway.png" alt="Subway Station Environment" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -912,6 +951,12 @@
                 </div>
             </div>
         </section>
+
+        <!-- Rhetorische Frage (Abschluss vor dem Kontakt) -->
+        <div class="rhetorical-question">
+            <h2>What could you create next?</h2>
+            <p>Let's build something great together.</p>
+        </div>
 
         <!-- Contact Section -->
         <section id="contact">
