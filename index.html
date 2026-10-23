@@ -242,7 +242,6 @@
             transform: scale(1.05);
         }
 
-        /* Styling für Platzhalter, wenn kein Bild/Video vorhanden ist */
         .media-placeholder {
             display: flex;
             flex-direction: column;
@@ -309,7 +308,6 @@
             margin: 0 auto;
         }
 
-        /* Die vertikale Linie */
         .evolution-container::before {
             content: '';
             position: absolute;
@@ -335,7 +333,6 @@
             padding-left: 50%;
         }
 
-        /* Der Punkt auf der Linie */
         .evolution-item::after {
             content: '';
             position: absolute;
@@ -664,7 +661,6 @@
                     <!-- Project 1: RIFTBOUND -->
                     <article class="project-card">
                         <div class="project-media" onclick="openLightbox('images/riftbound-portal.png', 'RIFTBOUND Portal Gameplay')">
-                            <!-- Bild 3 (Portale) -->
                             <img src="images/riftbound-portal.png" alt="RIFTBOUND Portal Gameplay" loading="lazy">
                         </div>
                         <div class="project-info">
@@ -687,7 +683,6 @@
                     <!-- Project 2: WW1 Game -->
                     <article class="project-card">
                         <div class="project-media" onclick="openLightbox('images/ww1-menu.png', 'WW1 Game Environment and Menu')">
-                            <!-- Bild 2 (Menü/Autos) -->
                             <img src="images/ww1-menu.png" alt="WW1 Game Environment and Menu" loading="lazy">
                         </div>
                         <div class="project-info">
@@ -710,15 +705,14 @@
                     <!-- Project 3: Combat System -->
                     <article class="project-card">
                         <div class="project-media" onclick="openLightbox('images/combat-system.png', 'Roblox Combat System Prototype')">
-                            <!-- NEUES BILD: Combat System -->
                             <img src="images/combat-system.png" alt="Roblox Combat System Prototype" loading="lazy">
                         </div>
                         <div class="project-info">
                             <div class="project-header">
                                 <h3>Roblox Combat System</h3>
-                                <span class="project-status status-wip">Prototype / Test</span>
+                                <span class="project-status status-wip">Prototype</span>
                             </div>
-                            <p>A test project and prototype for an R15 combat system in Roblox Studio. It serves as an interesting experiment for custom mechanics and animations.</p>
+                            <p>A prototype for an R15 combat system in Roblox Studio. It serves as an interesting experiment for custom mechanics and animations.</p>
                             <ul style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; padding-left: 1.2rem;">
                                 <li>Punch (M1)</li>
                                 <li>Fireball (E)</li>
@@ -792,8 +786,38 @@
             </div>
         </section>
 
+        <!-- Building Section -->
+        <section id="building">
+            <div class="container">
+                <h2>Building & Level Design</h2>
+                <p style="max-width: 800px; margin-bottom: 2rem;">In addition to scripting, I have extensive experience in environment design. I focus on creating immersive atmospheres, detailed level layouts, and integrating gameplay elements into the world.</p>
+                
+                <div class="showcase-grid">
+                    <!-- Ausgewähltes Bild 1: Burg mit Portalkreis -->
+                    <div class="showcase-item" onclick="openLightbox('images/build-castle.png', 'Detailed Castle and Portal Map')">
+                        <img src="images/build-castle.png" alt="Detailed Castle and Portal Map" loading="lazy">
+                    </div>
+
+                    <!-- Ausgewähltes Bild 2: Insel mit Palmen und Kran -->
+                    <div class="showcase-item" onclick="openLightbox('images/build-island.png', 'Tropical Island Level Design')">
+                        <img src="images/build-island.png" alt="Tropical Island Level Design" loading="lazy">
+                    </div>
+
+                    <!-- Ausgewähltes Bild 3: Asiatische Insel -->
+                    <div class="showcase-item" onclick="openLightbox('images/build-asian.png', 'Asian Themed Island Environment')">
+                        <img src="images/build-asian.png" alt="Asian Themed Island Environment" loading="lazy">
+                    </div>
+
+                    <!-- Ausgewähltes Bild 4: Western Stadt -->
+                    <div class="showcase-item" onclick="openLightbox('images/build-western.png', 'Western Town and NPC Setup')">
+                        <img src="images/build-western.png" alt="Western Town and NPC Setup" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Skills Section -->
-        <section id="skills">
+        <section id="skills" style="background-color: var(--surface-color);">
             <div class="container">
                 <h2>Skills & Focus Areas</h2>
                 <div class="skills-grid">
@@ -829,7 +853,7 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" style="background-color: var(--surface-color);">
+        <section id="about">
             <div class="container">
                 <h2>About Me</h2>
                 <div class="about-content">
@@ -841,7 +865,7 @@
         </section>
 
         <!-- Video & Image Showcase -->
-        <section id="showcase">
+        <section id="showcase" style="background-color: var(--surface-color);">
             <div class="container">
                 <h2>Media Showcase</h2>
                 <div class="showcase-grid">
@@ -881,7 +905,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" style="background-color: var(--surface-color);">
+        <section id="contact">
             <div class="container">
                 <h2>Get in Touch</h2>
                 <p style="text-align: center; margin-bottom: 2rem; color: var(--text-main);">You can reach out to me through any of the platforms below.</p>
@@ -890,6 +914,7 @@
                     <a href="https://github.com/Baumeister-create" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://www.youtube.com/@T-Fails" target="_blank" rel="noopener noreferrer">YouTube</a>
                     <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok</a>
+                    <a href="https://discord.com/users/tfailing1005175107955728415" target="_blank" rel="noopener noreferrer">Discord</a>
                 </div>
             </div>
         </section>
