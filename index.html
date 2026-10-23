@@ -281,6 +281,7 @@
             text-transform: uppercase;
         }
 
+        .status-released { background-color: #0f5132; color: #75b798; }
         .status-wip { background-color: #4a3b00; color: #ffd700; }
         .status-team { background-color: #003b4a; color: #00e5ff; }
         .status-past { background-color: #3b3b3b; color: #aaa; }
@@ -301,35 +302,87 @@
             color: var(--text-muted);
         }
 
-        /* --- Older Projects --- */
-        .older-projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
+        /* --- Evolution / Previous Releases Section --- */
+        .evolution-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .older-project-card {
+        /* Die vertikale Linie */
+        .evolution-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        .evolution-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .evolution-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        /* Der Punkt auf der Linie */
+        .evolution-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid var(--bg-color);
+            z-index: 1;
+        }
+
+        .evolution-content {
             background-color: var(--surface-color);
-            border-radius: var(--radius);
             border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             padding: 1.5rem;
-            text-align: center;
+            width: 90%;
+            position: relative;
+            transition: var(--transition);
         }
 
-        .older-project-card h3 {
+        .evolution-content:hover {
+            border-color: #444;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .evolution-content img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .evolution-content h3 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
 
-        .older-project-card p {
+        .evolution-content p {
             font-size: 0.9rem;
             margin-bottom: 1rem;
-        }
-
-        .older-project-card .btn {
-            font-size: 0.85rem;
-            padding: 0.5rem 1rem;
-            width: 100%;
         }
 
         /* --- Skills Section --- */
@@ -542,6 +595,19 @@
             .hero-buttons {
                 flex-direction: column;
             }
+
+            /* Evolution Timeline Mobile */
+            .evolution-container::before {
+                left: 20px;
+            }
+            .evolution-item, .evolution-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+            .evolution-item::after {
+                left: 20px;
+            }
         }
 
         /* --- Accessibility: Reduced Motion --- */
@@ -565,7 +631,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#building">Building</a></li>
+                <li><a href="#evolution">Evolution</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -604,13 +670,13 @@
                         <div class="project-info">
                             <div class="project-header">
                                 <h3>RIFTBOUND</h3>
-                                <span class="project-status status-team">Team Project</span>
+                                <span class="project-status status-released">Completed Release</span>
                             </div>
-                            <p>A Roblox game I worked on with a team. My activities included gameplay testing and release preparation. I was involved in testing portals, badges, teleportation, and bug fixing alongside the development team.</p>
+                            <p>A solo project that was successfully completed and released. The focus was on clean and efficient gameplay, utilizing ViewportFrames to implement the portal mechanics.</p>
                             <div class="project-tags">
-                                <span class="tag">Testing</span>
-                                <span class="tag">Bug Fixing</span>
-                                <span class="tag">Teamwork</span>
+                                <span class="tag">Solo Project</span>
+                                <span class="tag">ViewportFrames</span>
+                                <span class="tag">Gameplay</span>
                             </div>
                             <div style="margin-top: 1rem;">
                                 <a href="https://www.youtube.com/watch?v=O3qkQ1dXEyc" target="_blank" rel="noopener noreferrer">Watch Trailer on YouTube</a>
@@ -627,13 +693,13 @@
                         <div class="project-info">
                             <div class="project-header">
                                 <h3>WW1 Game</h3>
-                                <span class="project-status status-wip">In Development</span>
+                                <span class="project-status status-past">Paused</span>
                             </div>
-                            <p>A Roblox project focusing on a World War 1 game environment. The project is currently in development and is being documented through short videos on my social channels.</p>
+                            <p>A Roblox project developed with a team, focusing on a World War 1 game environment. The project is currently paused and was documented through short videos on my social channels.</p>
                             <div class="project-tags">
+                                <span class="tag">Team Project</span>
                                 <span class="tag">Environment</span>
-                                <span class="tag">Building</span>
-                                <span class="tag">WIP</span>
+                                <span class="tag">Paused</span>
                             </div>
                             <div style="margin-top: 1rem;">
                                 <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok Updates</a>
@@ -650,9 +716,9 @@
                         <div class="project-info">
                             <div class="project-header">
                                 <h3>Roblox Combat System</h3>
-                                <span class="project-status status-wip">Prototype</span>
+                                <span class="project-status status-wip">Prototype / Test</span>
                             </div>
-                            <p>An R15 combat system prototype tested in Roblox Studio. Features custom mechanics and animations created during development.</p>
+                            <p>A test project and prototype for an R15 combat system in Roblox Studio. It serves as an interesting experiment for custom mechanics and animations.</p>
                             <ul style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; padding-left: 1.2rem;">
                                 <li>Punch (M1)</li>
                                 <li>Fireball (E)</li>
@@ -660,54 +726,68 @@
                                 <li>Block (F)</li>
                             </ul>
                             <div class="project-tags">
-                                <span class="tag">Luau Scripting</span>
-                                <span class="tag">Animations</span>
+                                <span class="tag">Prototype</span>
+                                <span class="tag">Testing</span>
                                 <span class="tag">Combat</span>
                             </div>
                         </div>
                     </article>
 
                 </div>
-
-                <!-- Older Projects -->
-                <h2 style="margin-top: 4rem;">Previous Releases</h2>
-                <div class="older-projects-grid">
-                    <article class="older-project-card">
-                        <h3>The Escape: Cave</h3>
-                        <p>Past project.</p>
-                        <a href="https://www.roblox.com/games/125093617746033/The-Escape-Cave" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on Roblox</a>
-                    </article>
-                    <article class="older-project-card">
-                        <h3>Jump Master Obby</h3>
-                        <p>Past project.</p>
-                        <a href="https://www.roblox.com/games/125647617423531/Jump-Master-Obby" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on Roblox</a>
-                    </article>
-                    <article class="older-project-card">
-                        <h3>A Game About a Lamp</h3>
-                        <p>Past project.</p>
-                        <a href="https://www.roblox.com/games/99765686577474/A-Game-About-a-Lamp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on Roblox</a>
-                    </article>
-                </div>
             </div>
         </section>
 
-        <!-- Building Section -->
-        <section id="building" style="background-color: var(--surface-color);">
+        <!-- Evolution / Previous Releases Section -->
+        <section id="evolution" style="background-color: var(--surface-color);">
             <div class="container">
-                <h2>Building & Team Contributions</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: center;">
-                    <div>
-                        <p>In addition to scripting, I have experience in environment design and building for team projects.</p>
-                        <ul style="color: var(--text-muted); margin-left: 1.5rem; margin-bottom: 2rem;">
-                            <li style="margin-bottom: 1rem;"><strong>DDR-RP Project:</strong> Contributed to the building and level design aspects of a roleplay project.</li>
-                            <li><strong>Island Project:</strong> Assisted another team by building sections of the islands. This project involved navigating challenges related to texture and color application.</li>
-                        </ul>
-                        <p>These experiences helped me understand the importance of collaboration and adapting to different project requirements within a team environment.</p>
+                <h2>The Evolution of My Games</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 4rem auto; color: var(--text-main);">
+                    My development journey started with simple ideas and has grown into more complex systems. Here is a look back at my previous releases that paved the way.
+                </p>
+                
+                <div class="evolution-container">
+                    
+                    <!-- 1. A Game About a Lamp -->
+                    <div class="evolution-item">
+                        <div class="evolution-content">
+                            <img src="images/game-lamp.png" alt="A Game About a Lamp Thumbnail" onclick="openLightbox('images/game-lamp.png', 'A Game About a Lamp')" loading="lazy">
+                            <h3>A Game About a Lamp</h3>
+                            <span class="project-status status-past" style="display: inline-block; margin-bottom: 0.5rem;">The Beginning</span>
+                            <p>The very first step of my journey. A simple, experimental game that taught me the basics of Roblox Studio and how to bring a simple concept to life.</p>
+                            <a href="https://www.roblox.com/games/99765686577474/A-Game-About-a-Lamp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">View on Roblox</a>
+                        </div>
                     </div>
-                    <!-- Bild 5 (Studio Karte) -->
-                    <div class="project-media" style="border-radius: var(--radius); border: 1px solid var(--border-color);" onclick="openLightbox('images/studio-map.png', 'Roblox Studio Map and Level Design')">
-                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
+
+                    <!-- 2. Jump Master Obby -->
+                    <div class="evolution-item">
+                        <div class="evolution-content">
+                            <img src="images/jump-master.png" alt="Jump Master Obby Thumbnail" onclick="openLightbox('images/jump-master.png', 'Jump Master Obby')" loading="lazy">
+                            <h3>Jump Master Obby</h3>
+                            <span class="project-status status-past" style="display: inline-block; margin-bottom: 0.5rem;">Level Design</span>
+                            <p>Moving from a simple concept to level design. This Obby helped me understand player movement, obstacle placement, and basic game pacing.</p>
+                            <a href="https://www.roblox.com/games/125647617423531/Jump-Master-Obby" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">View on Roblox</a>
+                        </div>
                     </div>
+
+                    <!-- 3. The Escape: Cave -->
+                    <div class="evolution-item">
+                        <div class="evolution-content">
+                            <img src="images/escape-cave.png" alt="The Escape: Cave Thumbnail" onclick="openLightbox('images/escape-cave.png', 'The Escape: Cave')" loading="lazy">
+                            <h3>The Escape: Cave</h3>
+                            <span class="project-status status-past" style="display: inline-block; margin-bottom: 0.5rem;">Puzzle & Atmosphere</span>
+                            <p>Stepping into puzzle mechanics and atmospheric design. This project was about creating tension and giving the player a sense of exploration.</p>
+                            <a href="https://www.roblox.com/games/125093617746033/The-Escape-Cave" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">View on Roblox</a>
+                        </div>
+                    </div>
+
+                    <!-- 4. New Projects Mention (Text only) -->
+                    <div class="evolution-item">
+                        <div class="evolution-content" style="background-color: transparent; border: 1px dashed var(--accent); text-align: center;">
+                            <h3 style="color: var(--accent);">The Next Chapter</h3>
+                            <p>From these early projects, I moved on to more advanced systems like the WW1 Game, RIFTBOUND, and my Combat Prototypes. I am constantly working on new projects to expand my skills.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -786,16 +866,14 @@
                         <img src="images/ww1-form.png" alt="WW1 Conscription Document UI" loading="lazy">
                     </div>
 
-                    <!-- Bild 4 (Studio Scripting) - Verschoben aus Projekt 3 -->
+                    <!-- Bild 4 (Studio Scripting) -->
                     <div class="showcase-item" onclick="openLightbox('images/studio-scripting.png', 'Combat System Scripting in Roblox Studio')">
                         <img src="images/studio-scripting.png" alt="Combat System Scripting in Roblox Studio" loading="lazy">
                     </div>
                     
-                    <!-- Platzhalter für zukünftige Medien -->
-                    <div class="showcase-item">
-                        <div class="media-placeholder">
-                            <span>Future Project Media<br>(Image or Video goes here)</span>
-                        </div>
+                    <!-- Bild 5 (Studio Map) -->
+                    <div class="showcase-item" onclick="openLightbox('images/studio-map.png', 'Roblox Studio Map and Level Design')">
+                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
                     </div>
 
                 </div>
