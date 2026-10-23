@@ -1,62 +1,869 @@
-
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baumeister | Developer</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #10131c;
-      color: #f4f6ff;
-      line-height: 1.6;
-    }
-    header {
-      padding: 70px 20px;
-      text-align: center;
-      background: #1b2233;
-    }
-    h1 { font-size: 42px; margin-bottom: 8px; }
-    .accent { color: #73a7ff; }
-    main { max-width: 800px; margin: auto; padding: 30px 20px; }
-    section {
-      background: #1b2233;
-      padding: 22px;
-      margin: 20px 0;
-      border-radius: 12px;
-    }
-    a { color: #8ab5ff; }
-    footer { text-align: center; padding: 25px; color: #aab2c5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baumeister | Roblox Developer Portfolio</title>
+    <meta name="description" content="Portfolio of Baumeister, a Roblox developer focusing on scripting, gameplay mechanics, and building.">
+    
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            --bg-color: #0d0d0d;
+            --surface-color: #1a1a1a;
+            --surface-hover: #242424;
+            --text-main: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --accent: #8b5cf6; /* Subtle violet */
+            --accent-hover: #7c3aed;
+            --border-color: #333333;
+            --radius: 12px;
+            --transition: all 0.3s ease;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* --- Reset & Base Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover, a:focus {
+            color: var(--accent-hover);
+        }
+
+        img, iframe {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem; }
+        h3 { font-size: 1.5rem; }
+        p { margin-bottom: 1rem; color: var(--text-muted); }
+
+        /* --- Layout Utilities --- */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* --- Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+            background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* --- Projects Section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--surface-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #444;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .project-media {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-media iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .project-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, #111, #111 10px, #1a1a1a 10px, #1a1a1a 20px);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-status {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            background-color: #333;
+            color: #ccc;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-wip { background-color: #4a3b00; color: #ffd700; }
+        .status-team { background-color: #003b4a; color: #00e5ff; }
+        .status-past { background-color: #3b3b3b; color: #aaa; }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            background-color: #2a2a2a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        /* --- Older Projects --- */
+        .older-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .older-project-card {
+            background-color: var(--surface-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .older-project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .older-project-card p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .older-project-card .btn {
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            width: 100%;
+        }
+
+        /* --- Skills Section --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .skill-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* --- About Section --- */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .about-content p {
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Video Showcase --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- Contact & Footer --- */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .social-links a:hover {
+            background-color: var(--surface-hover);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- Lightbox --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent);
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--surface-color);
+                flex-direction: column;
+                padding: 1rem 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* --- Accessibility: Reduced Motion --- */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Hey, ich bin <span class="accent">Baumeister</span></h1>
-    <p>Roblox Developer | Lua | Game Development</p>
-  </header>
 
-  <main>
-    <section>
-      <h2>Über mich</h2>
-      <p>Ich entwickle Roblox-Spiele, lerne Lua und arbeite an eigenen Projekten. Dabei probiere ich neue Ideen aus und verbessere meine Fähigkeiten.</p>
-    </section>
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#hero" class="logo">Baumeister</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#building">Building</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
 
-    <section>
-      <h2>Meine Projekte</h2>
-      <h3>RIFTBOUND</h3>
-      <p>Ein Roblox-Spiel, an dem ich Gameplay, Spielmechaniken und die Vorbereitung für den Release entwickle.</p>
-      <h3>Weitere Projekte</h3>
-      <p>Ich experimentiere mit Spielsystemen, programmiere eigene Funktionen und lerne durch praktisches Ausprobieren.</p>
-    </section>
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="hero-subtitle">Roblox Developer</span>
+                    <h1>Scripting, Building & Gameplay</h1>
+                    <p style="font-size: 1.2rem; max-width: 600px;">I build and test Roblox game systems, work on game environments, and collaborate with other developers. I enjoy solving technical problems and improving my skills through practical projects.</p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary">Contact / Roblox Profile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section>
-      <h2>Meine Fähigkeiten</h2>
-      <p>Lua · Roblox Studio · Grundlagen in Python · Problemlösung</p>
-    </section>
-  </main>
+        <!-- Main Projects Section -->
+        <section id="projects">
+            <div class="container">
+                <h2>Main Projects</h2>
+                <div class="projects-grid">
+                    
+                    <!-- Project 1: RIFTBOUND -->
+                    <article class="project-card">
+                        <div class="project-media">
+                            <!-- Embedded YouTube video (nocookie) -->
+                            <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c" title="RIFTBOUND Gameplay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-header">
+                                <h3>RIFTBOUND</h3>
+                                <span class="project-status status-team">Team Project</span>
+                            </div>
+                            <p>A Roblox game I worked on with a team. My activities included gameplay testing and release preparation. I was involved in testing portals, badges, teleportation, and bug fixing alongside the development team.</p>
+                            <div class="project-tags">
+                                <span class="tag">Testing</span>
+                                <span class="tag">Bug Fixing</span>
+                                <span class="tag">Teamwork</span>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <a href="https://www.youtube.com/watch?v=cCkhV5akp3c" target="_blank" rel="noopener noreferrer">Watch Video 1</a> | 
+                                <a href="https://www.youtube.com/watch?v=j4Naz01Spyk" target="_blank" rel="noopener noreferrer">Watch Video 2</a>
+                            </div>
+                        </div>
+                    </article>
 
-  <footer>Baumeister · Developer Portfolio</footer>
+                    <!-- Project 2: WW1 Game -->
+                    <article class="project-card">
+                        <div class="project-media">
+                            <!-- PLACEHOLDER: Replace with a screenshot or image of your WW1 game -->
+                            <div class="media-placeholder">
+                                <span>Map / Gameplay Screenshot<br>(Image goes here)</span>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-header">
+                                <h3>WW1 Game</h3>
+                                <span class="project-status status-wip">In Development</span>
+                            </div>
+                            <p>A Roblox project focusing on a World War 1 game environment. The project is currently in development and is being documented through short videos on my social channels.</p>
+                            <div class="project-tags">
+                                <span class="tag">Environment</span>
+                                <span class="tag">Building</span>
+                                <span class="tag">WIP</span>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok Updates</a> | 
+                                <a href="https://www.youtube.com/@T-Fails" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: Combat System -->
+                    <article class="project-card">
+                        <div class="project-media">
+                            <!-- PLACEHOLDER: Replace with a gameplay GIF or video of your combat system -->
+                            <div class="media-placeholder">
+                                <span>Combat System Gameplay<br>(GIF or Video goes here)</span>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-header">
+                                <h3>Roblox Combat System</h3>
+                                <span class="project-status status-wip">Prototype</span>
+                            </div>
+                            <p>An R15 combat system prototype tested in Roblox Studio. Features custom mechanics and animations created during development.</p>
+                            <ul style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; padding-left: 1.2rem;">
+                                <li>Punch (M1)</li>
+                                <li>Fireball (E)</li>
+                                <li>Dash (Q)</li>
+                                <li>Block (F)</li>
+                            </ul>
+                            <div class="project-tags">
+                                <span class="tag">Luau Scripting</span>
+                                <span class="tag">Animations</span>
+                                <span class="tag">Combat</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- Older Projects -->
+                <h2 style="margin-top: 4rem;">Previous Releases</h2>
+                <div class="older-projects-grid">
+                    <article class="older-project-card">
+                        <h3>The Escape: Cave</h3>
+                        <p>Past project.</p>
+                        <a href="https://www.roblox.com/games/125093617746033/The-Escape-Cave" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on Roblox</a>
+                    </article>
+                    <article class="older-project-card">
+                        <h3>Jump Master Obby</h3>
+                        <p>Past project.</p>
+                        <a href="https://www.roblox.com/games/125647617423531/Jump-Master-Obby" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on Roblox</a>
+                    </article>
+                    <article class="older-project-card">
+                        <h3>A Game About a Lamp</h3>
+                        <p>Past project.</p>
+                        <a href="https://www.roblox.com/games/99765686577474/A-Game-About-a-Lamp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on Roblox</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Building Section -->
+        <section id="building" style="background-color: var(--surface-color);">
+            <div class="container">
+                <h2>Building & Team Contributions</h2>
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <p>In addition to scripting, I have experience in environment design and building for team projects.</p>
+                    <ul style="color: var(--text-muted); margin-left: 1.5rem; margin-bottom: 2rem;">
+                        <li style="margin-bottom: 1rem;"><strong>DDR-RP Project:</strong> Contributed to the building and level design aspects of a roleplay project.</li>
+                        <li><strong>Island Project:</strong> Assisted another team by building sections of the islands. This project involved navigating challenges related to texture and color application.</li>
+                    </ul>
+                    <p>These experiences helped me understand the importance of collaboration and adapting to different project requirements within a team environment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2>Skills & Focus Areas</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Scripting</h3>
+                        <ul class="skill-list">
+                            <li>Roblox Studio</li>
+                            <li>Lua / Luau</li>
+                            <li>Gameplay Mechanics</li>
+                            <li>Basic Debugging</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Building</h3>
+                        <ul class="skill-list">
+                            <li>Roblox Studio Building</li>
+                            <li>Level Design</li>
+                            <li>Environment Creation</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Development</h3>
+                        <ul class="skill-list">
+                            <li>Game Testing</li>
+                            <li>Reproducing & Investigating Bugs</li>
+                            <li>Team Collaboration</li>
+                            <li>Using Tutorials & AI for Learning</li>
+                            <li>Basic Python</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" style="background-color: var(--surface-color);">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <p>I'm a Roblox developer with around one year of experience, focusing on scripting, gameplay mechanics, and building.</p>
+                    <p>I enjoy creating and testing game systems, solving technical problems, and collaborating with other developers on projects.</p>
+                    <p>I use tutorials and AI tools as learning aids while testing, adapting, and learning from the code I work with. I'm always looking to improve my skills and contribute to interesting Roblox projects.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Showcase -->
+        <section id="showcase">
+            <div class="container">
+                <h2>Video Showcase</h2>
+                <div class="video-grid">
+                    
+                    <!-- Video 1: RIFTBOUND -->
+                    <div class="video-container">
+                        <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c" title="RIFTBOUND Showcase" allowfullscreen loading="lazy"></iframe>
+                    </div>
+
+                    <!-- Video 2: RIFTBOUND -->
+                    <div class="video-container">
+                        <iframe src="https://www.youtube-nocookie.com/embed/j4Naz01Spyk" title="RIFTBOUND Showcase 2" allowfullscreen loading="lazy"></iframe>
+                    </div>
+
+                    <!-- PLACEHOLDER: Add more videos here (e.g., WW1 Game or Combat System) -->
+                    <div class="video-container" style="display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, #111, #111 10px, #1a1a1a 10px, #1a1a1a 20px);">
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">Future Video / Project Showcase</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" style="background-color: var(--surface-color);">
+            <div class="container">
+                <h2>Get in Touch</h2>
+                <p style="text-align: center; margin-bottom: 2rem; color: var(--text-main);">You can reach out to me through any of the platforms below.</p>
+                <div class="social-links">
+                    <a href="https://www.roblox.com/users/1099239540/profile" target="_blank" rel="noopener noreferrer">Roblox Profile</a>
+                    <a href="https://github.com/Baumeister-create" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.youtube.com/@T-Fails" target="_blank" rel="noopener noreferrer">YouTube</a>
+                    <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Baumeister | Roblox Developer Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox for Images -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image Viewer">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close Image Viewer">&times;</button>
+            <img id="lightboxImg" src="" alt="Enlarged view">
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Dynamic Year for Footer ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                // Update ARIA attribute
+                const isExpanded = navLinks.classList.contains('active');
+                mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
+            });
+
+            // Close mobile menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // --- Lightbox Functionality ---
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            // Function to open lightbox
+            window.openLightbox = function(imageSrc, imageAlt) {
+                lightboxImg.src = imageSrc;
+                lightboxImg.alt = imageAlt || 'Enlarged view';
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            };
+
+            // Function to close lightbox
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+                // Clear image source after fade out to prevent visual glitch
+                setTimeout(() => {
+                    lightboxImg.src = '';
+                }, 300);
+            };
+
+            // Event Listeners for closing
+            lightboxClose.addEventListener('click', closeLightbox);
+            
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+
+            // Note: To use the lightbox on an image, add this to the image tag:
+            // onclick="openLightbox('URL_TO_IMAGE', 'Alt text description')"
+            // and add style="cursor: pointer;" to the image.
+        });
+    </script>
 </body>
 </html>
