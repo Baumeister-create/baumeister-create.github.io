@@ -222,7 +222,7 @@
             background-color: #000;
             position: relative;
             overflow: hidden;
-            cursor: pointer; /* Zeigt an, dass es klickbar ist */
+            cursor: pointer;
         }
 
         .project-media iframe {
@@ -239,11 +239,13 @@
         }
 
         .project-media:hover img {
-            transform: scale(1.05); /* Leichter Zoom-Effekt beim Hover */
+            transform: scale(1.05);
         }
 
+        /* Styling für Platzhalter, wenn kein Bild/Video vorhanden ist */
         .media-placeholder {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 100%;
@@ -596,7 +598,7 @@
                     <!-- Project 1: RIFTBOUND -->
                     <article class="project-card">
                         <div class="project-media" onclick="openLightbox('images/riftbound-portal.png', 'RIFTBOUND Portal Gameplay')">
-                            <!-- BILD 1: Die Portale -->
+                            <!-- Bild 3 (Portale) -->
                             <img src="images/riftbound-portal.png" alt="RIFTBOUND Portal Gameplay" loading="lazy">
                         </div>
                         <div class="project-info">
@@ -619,7 +621,7 @@
                     <!-- Project 2: WW1 Game -->
                     <article class="project-card">
                         <div class="project-media" onclick="openLightbox('images/ww1-menu.png', 'WW1 Game Environment and Menu')">
-                            <!-- BILD 2: Das Menü / Die Autos -->
+                            <!-- Bild 2 (Menü/Autos) -->
                             <img src="images/ww1-menu.png" alt="WW1 Game Environment and Menu" loading="lazy">
                         </div>
                         <div class="project-info">
@@ -641,9 +643,9 @@
 
                     <!-- Project 3: Combat System -->
                     <article class="project-card">
-                        <div class="project-media" onclick="openLightbox('images/combat-ui.png', 'Combat System UI and Conscription Document')">
-                            <!-- BILD 3: Das Formular / UI -->
-                            <img src="images/combat-ui.png" alt="Combat System UI and Conscription Document" loading="lazy">
+                        <div class="project-media" onclick="openLightbox('images/studio-scripting.png', 'Combat System Scripting in Roblox Studio')">
+                            <!-- Bild 4 (Studio Scripting) -->
+                            <img src="images/studio-scripting.png" alt="Combat System Scripting in Roblox Studio" loading="lazy">
                         </div>
                         <div class="project-info">
                             <div class="project-header">
@@ -693,13 +695,19 @@
         <section id="building" style="background-color: var(--surface-color);">
             <div class="container">
                 <h2>Building & Team Contributions</h2>
-                <div style="max-width: 800px; margin: 0 auto;">
-                    <p>In addition to scripting, I have experience in environment design and building for team projects.</p>
-                    <ul style="color: var(--text-muted); margin-left: 1.5rem; margin-bottom: 2rem;">
-                        <li style="margin-bottom: 1rem;"><strong>DDR-RP Project:</strong> Contributed to the building and level design aspects of a roleplay project.</li>
-                        <li><strong>Island Project:</strong> Assisted another team by building sections of the islands. This project involved navigating challenges related to texture and color application.</li>
-                    </ul>
-                    <p>These experiences helped me understand the importance of collaboration and adapting to different project requirements within a team environment.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: center;">
+                    <div>
+                        <p>In addition to scripting, I have experience in environment design and building for team projects.</p>
+                        <ul style="color: var(--text-muted); margin-left: 1.5rem; margin-bottom: 2rem;">
+                            <li style="margin-bottom: 1rem;"><strong>DDR-RP Project:</strong> Contributed to the building and level design aspects of a roleplay project.</li>
+                            <li><strong>Island Project:</strong> Assisted another team by building sections of the islands. This project involved navigating challenges related to texture and color application.</li>
+                        </ul>
+                        <p>These experiences helped me understand the importance of collaboration and adapting to different project requirements within a team environment.</p>
+                    </div>
+                    <!-- Bild 5 (Studio Karte) -->
+                    <div class="project-media" style="border-radius: var(--radius); border: 1px solid var(--border-color);" onclick="openLightbox('images/studio-map.png', 'Roblox Studio Map and Level Design')">
+                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
+                    </div>
                 </div>
             </div>
         </section>
@@ -773,14 +781,23 @@
                         <iframe src="https://www.youtube-nocookie.com/embed/j4Naz01Spyk" title="Combat System Prototype" allowfullscreen loading="lazy"></iframe>
                     </div>
 
-                    <!-- BILD 4: Roblox Studio Scripting -->
-                    <div class="showcase-item" onclick="openLightbox('images/studio-scripting.png', 'Roblox Studio Scripting and Development')">
-                        <img src="images/studio-scripting.png" alt="Roblox Studio Scripting and Development" loading="lazy">
+                    <!-- Bild 1 (Formular / UI) -->
+                    <div class="showcase-item" onclick="openLightbox('images/ww1-form.png', 'WW1 Conscription Document UI')">
+                        <img src="images/ww1-form.png" alt="WW1 Conscription Document UI" loading="lazy">
                     </div>
 
-                    <!-- BILD 5: Roblox Studio Map/Level Design -->
-                    <div class="showcase-item" onclick="openLightbox('images/studio-map.png', 'Roblox Studio Map and Level Design')">
-                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
+                    <!-- Platzhalter für zukünftige Medien -->
+                    <div class="showcase-item">
+                        <div class="media-placeholder">
+                            <span>Future Project Media<br>(Image or Video goes here)</span>
+                        </div>
+                    </div>
+                     
+                    <!-- Platzhalter für zukünftige Medien -->
+                    <div class="showcase-item">
+                        <div class="media-placeholder">
+                            <span>Future Project Media<br>(Image or Video goes here)</span>
+                        </div>
                     </div>
 
                 </div>
