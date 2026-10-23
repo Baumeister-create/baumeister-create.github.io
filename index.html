@@ -222,6 +222,7 @@
             background-color: #000;
             position: relative;
             overflow: hidden;
+            cursor: pointer; /* Zeigt an, dass es klickbar ist */
         }
 
         .project-media iframe {
@@ -234,6 +235,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-media:hover img {
+            transform: scale(1.05); /* Leichter Zoom-Effekt beim Hover */
         }
 
         .media-placeholder {
@@ -375,14 +381,14 @@
             margin-bottom: 1.5rem;
         }
 
-        /* --- Video Showcase --- */
-        .video-grid {
+        /* --- Video & Image Showcase --- */
+        .showcase-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
-        .video-container {
+        .showcase-item {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -390,15 +396,27 @@
             border-radius: var(--radius);
             overflow: hidden;
             border: 1px solid var(--border-color);
+            cursor: pointer;
         }
 
-        .video-container iframe {
+        .showcase-item iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .showcase-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .showcase-item:hover img {
+            transform: scale(1.05);
         }
 
         /* --- Contact & Footer --- */
@@ -577,9 +595,9 @@
                     
                     <!-- Project 1: RIFTBOUND -->
                     <article class="project-card">
-                        <div class="project-media">
-                            <!-- Embedded YouTube video (nocookie) -->
-                            <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c" title="RIFTBOUND Gameplay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        <div class="project-media" onclick="openLightbox('images/riftbound-portal.png', 'RIFTBOUND Portal Gameplay')">
+                            <!-- BILD 1: Die Portale -->
+                            <img src="images/riftbound-portal.png" alt="RIFTBOUND Portal Gameplay" loading="lazy">
                         </div>
                         <div class="project-info">
                             <div class="project-header">
@@ -593,19 +611,16 @@
                                 <span class="tag">Teamwork</span>
                             </div>
                             <div style="margin-top: 1rem;">
-                                <a href="https://www.youtube.com/watch?v=cCkhV5akp3c" target="_blank" rel="noopener noreferrer">Watch Video 1</a> | 
-                                <a href="https://www.youtube.com/watch?v=j4Naz01Spyk" target="_blank" rel="noopener noreferrer">Watch Video 2</a>
+                                <a href="https://www.youtube.com/watch?v=O3qkQ1dXEyc" target="_blank" rel="noopener noreferrer">Watch Trailer on YouTube</a>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 2: WW1 Game -->
                     <article class="project-card">
-                        <div class="project-media">
-                            <!-- PLACEHOLDER: Replace with a screenshot or image of your WW1 game -->
-                            <div class="media-placeholder">
-                                <span>Map / Gameplay Screenshot<br>(Image goes here)</span>
-                            </div>
+                        <div class="project-media" onclick="openLightbox('images/ww1-menu.png', 'WW1 Game Environment and Menu')">
+                            <!-- BILD 2: Das Menü / Die Autos -->
+                            <img src="images/ww1-menu.png" alt="WW1 Game Environment and Menu" loading="lazy">
                         </div>
                         <div class="project-info">
                             <div class="project-header">
@@ -619,19 +634,16 @@
                                 <span class="tag">WIP</span>
                             </div>
                             <div style="margin-top: 1rem;">
-                                <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok Updates</a> | 
-                                <a href="https://www.youtube.com/@T-Fails" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+                                <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok Updates</a>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 3: Combat System -->
                     <article class="project-card">
-                        <div class="project-media">
-                            <!-- PLACEHOLDER: Replace with a gameplay GIF or video of your combat system -->
-                            <div class="media-placeholder">
-                                <span>Combat System Gameplay<br>(GIF or Video goes here)</span>
-                            </div>
+                        <div class="project-media" onclick="openLightbox('images/combat-ui.png', 'Combat System UI and Conscription Document')">
+                            <!-- BILD 3: Das Formular / UI -->
+                            <img src="images/combat-ui.png" alt="Combat System UI and Conscription Document" loading="lazy">
                         </div>
                         <div class="project-info">
                             <div class="project-header">
@@ -740,25 +752,35 @@
             </div>
         </section>
 
-        <!-- Video Showcase -->
+        <!-- Video & Image Showcase -->
         <section id="showcase">
             <div class="container">
-                <h2>Video Showcase</h2>
-                <div class="video-grid">
+                <h2>Media Showcase</h2>
+                <div class="showcase-grid">
                     
-                    <!-- Video 1: RIFTBOUND -->
-                    <div class="video-container">
-                        <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c" title="RIFTBOUND Showcase" allowfullscreen loading="lazy"></iframe>
+                    <!-- Video 1: RIFTBOUND Trailer -->
+                    <div class="showcase-item">
+                        <iframe src="https://www.youtube-nocookie.com/embed/O3qkQ1dXEyc" title="RIFTBOUND Trailer" allowfullscreen loading="lazy"></iframe>
                     </div>
 
-                    <!-- Video 2: RIFTBOUND -->
-                    <div class="video-container">
-                        <iframe src="https://www.youtube-nocookie.com/embed/j4Naz01Spyk" title="RIFTBOUND Showcase 2" allowfullscreen loading="lazy"></iframe>
+                    <!-- Video 2: WW1 Character Selection -->
+                    <div class="showcase-item">
+                        <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c" title="WW1 Character Selection" allowfullscreen loading="lazy"></iframe>
                     </div>
 
-                    <!-- PLACEHOLDER: Add more videos here (e.g., WW1 Game or Combat System) -->
-                    <div class="video-container" style="display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, #111, #111 10px, #1a1a1a 10px, #1a1a1a 20px);">
-                        <span style="color: var(--text-muted); font-size: 0.9rem;">Future Video / Project Showcase</span>
+                    <!-- Video 3: Combat System -->
+                    <div class="showcase-item">
+                        <iframe src="https://www.youtube-nocookie.com/embed/j4Naz01Spyk" title="Combat System Prototype" allowfullscreen loading="lazy"></iframe>
+                    </div>
+
+                    <!-- BILD 4: Roblox Studio Scripting -->
+                    <div class="showcase-item" onclick="openLightbox('images/studio-scripting.png', 'Roblox Studio Scripting and Development')">
+                        <img src="images/studio-scripting.png" alt="Roblox Studio Scripting and Development" loading="lazy">
+                    </div>
+
+                    <!-- BILD 5: Roblox Studio Map/Level Design -->
+                    <div class="showcase-item" onclick="openLightbox('images/studio-map.png', 'Roblox Studio Map and Level Design')">
+                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
                     </div>
 
                 </div>
@@ -808,7 +830,6 @@
 
             mobileMenuBtn.addEventListener('click', () => {
                 navLinks.classList.toggle('active');
-                // Update ARIA attribute
                 const isExpanded = navLinks.classList.contains('active');
                 mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
             });
@@ -826,25 +847,21 @@
             const lightboxImg = document.getElementById('lightboxImg');
             const lightboxClose = document.getElementById('lightboxClose');
 
-            // Function to open lightbox
             window.openLightbox = function(imageSrc, imageAlt) {
                 lightboxImg.src = imageSrc;
                 lightboxImg.alt = imageAlt || 'Enlarged view';
                 lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                document.body.style.overflow = 'hidden';
             };
 
-            // Function to close lightbox
             const closeLightbox = () => {
                 lightbox.classList.remove('active');
                 document.body.style.overflow = '';
-                // Clear image source after fade out to prevent visual glitch
                 setTimeout(() => {
                     lightboxImg.src = '';
                 }, 300);
             };
 
-            // Event Listeners for closing
             lightboxClose.addEventListener('click', closeLightbox);
             
             lightbox.addEventListener('click', (e) => {
@@ -853,16 +870,11 @@
                 }
             });
 
-            // Close on Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && lightbox.classList.contains('active')) {
                     closeLightbox();
                 }
             });
-
-            // Note: To use the lightbox on an image, add this to the image tag:
-            // onclick="openLightbox('URL_TO_IMAGE', 'Alt text description')"
-            // and add style="cursor: pointer;" to the image.
         });
     </script>
 </body>
