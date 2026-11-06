@@ -6,7 +6,6 @@
     <title>Baumeister | Roblox Developer Portfolio</title>
     <meta name="description" content="Portfolio of Baumeister, a Roblox developer focusing on scripting, gameplay mechanics, and building.">
 
-    <!-- Prevent FOUC for scroll-reveal (JS adds .js) -->
     <script>document.documentElement.classList.add('js');</script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,7 +169,6 @@
         }
         .skip-link:focus { left: 0; }
 
-        /* Page background glow */
         .page-glow {
             position: fixed;
             inset: 0;
@@ -184,7 +182,6 @@
 
         main, footer { position: relative; z-index: 1; }
 
-        /* Scroll progress */
         .scroll-progress {
             position: fixed;
             top: 0; left: 0;
@@ -453,7 +450,6 @@
             margin-top: 2.2rem;
         }
 
-        /* Hero profile card */
         .hero__card {
             position: relative;
             border-radius: var(--radius-lg);
@@ -564,7 +560,6 @@
             text-align: right;
         }
 
-        /* Hero entrance animation */
         @keyframes rise {
             from { opacity: 0; transform: translateY(22px); }
             to   { opacity: 1; transform: none; }
@@ -594,7 +589,7 @@
         }
 
         /* =========================================================
-           9. Badges & Tags
+           9. Badges, Meta & Tags
            ========================================================= */
         .badge {
             display: inline-flex;
@@ -616,6 +611,27 @@
         .badge--past      { color: #9ca3af; background: rgba(156, 163, 175, 0.08); border-color: rgba(156, 163, 175, 0.22); }
         .badge--new       { color: #c4b5fd; background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.38); }
 
+        /* Shared meta row (badge + date) */
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.9rem;
+        }
+
+        .project-meta time {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+        }
+
+        .project-meta time.unknown {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
@@ -634,9 +650,9 @@
         }
 
         /* =========================================================
-           10. Media (clickable images)
+           10. Clickable Media (shared)
            ========================================================= */
-        .media {
+        .media-trigger {
             position: relative;
             display: block;
             width: 100%;
@@ -646,28 +662,19 @@
             background: #000;
             cursor: zoom-in;
             overflow: hidden;
-            aspect-ratio: 16 / 9;
         }
 
-        .media img {
+        .media-trigger img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.7s var(--ease), filter 0.4s ease;
+            transition: transform 0.7s var(--ease), opacity 0.3s ease;
         }
 
-        .media::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background: linear-gradient(180deg, transparent 45%, rgba(5, 6, 10, 0.65));
-            opacity: 0.7;
-            transition: opacity 0.35s ease;
-            pointer-events: none;
-        }
+        .media-trigger:hover img,
+        .media-trigger:focus-visible img { transform: scale(1.045); }
 
-        .media::after {
+        .media-trigger::after {
             content: "View";
             position: absolute;
             right: 0.9rem;
@@ -689,32 +696,21 @@
             pointer-events: none;
         }
 
-        .media:hover img,
-        .media:focus-visible img { transform: scale(1.055); }
-
-        .media:hover::after,
-        .media:focus-visible::after { opacity: 1; transform: none; }
-
-        .media:hover::before { opacity: 0.4; }
+        .media-trigger:hover::after,
+        .media-trigger:focus-visible::after { opacity: 1; transform: none; }
 
         /* =========================================================
-           11. Project Cards
+           11. Unified Project Cards (Featured / Main)
            ========================================================= */
         .projects {
             display: grid;
             gap: 1.5rem;
         }
 
-        .projects__pair {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project {
+        .project-card {
             position: relative;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
             border-radius: var(--radius);
             border: 1px solid var(--border);
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
@@ -722,44 +718,66 @@
             transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
         }
 
-        .project:hover {
+        .project-card:hover {
             border-color: rgba(139, 92, 246, 0.38);
             background: linear-gradient(180deg, rgba(139, 92, 246, 0.06), rgba(255, 255, 255, 0.01));
             box-shadow: 0 28px 60px -34px rgba(139, 92, 246, 0.55), 0 20px 50px -34px #000;
         }
 
-        .project--wide {
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-            align-items: stretch;
+        .project-card__media {
+            position: relative;
+            min-height: 320px;
+            background: #000;
+            border: 0;
+            padding: 0;
+            cursor: zoom-in;
+            overflow: hidden;
         }
 
-        .project--wide .media {
-            aspect-ratio: auto;
+        .project-card__media img {
+            width: 100%;
             height: 100%;
-            min-height: 300px;
+            object-fit: cover;
+            transition: transform 0.7s var(--ease);
         }
 
-        .project--dm { grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); }
+        .project-card__media:hover img,
+        .project-card__media:focus-visible img { transform: scale(1.045); }
 
-        .project__body {
+        .project-card__media::after {
+            content: "View";
+            position: absolute;
+            right: 0.9rem;
+            bottom: 0.9rem;
+            z-index: 2;
+            padding: 0.32rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(8, 9, 13, 0.72);
+            backdrop-filter: blur(8px);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        .project-card__media:hover::after,
+        .project-card__media:focus-visible::after { opacity: 1; transform: none; }
+
+        .project-card__body {
             display: flex;
             flex-direction: column;
-            padding: clamp(1.4rem, 2.4vw, 2rem);
-            flex-grow: 1;
+            padding: clamp(1.4rem, 2.4vw, 2.1rem);
+            justify-content: center;
         }
 
-        .project__top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 0.9rem;
-        }
+        .project-card__body h3 { margin: 0 0 0.4rem; }
 
-        .project__top h3 { margin: 0; }
-
-        .project__body > p { font-size: 0.94rem; }
+        .project-card__body > p { font-size: 0.95rem; }
 
         .actions {
             display: flex;
@@ -768,14 +786,73 @@
             margin-top: 1.4rem;
         }
 
-        .feature-list {
-            list-style: none;
-            margin: 0 0 0.4rem;
-            padding: 0;
-            display: grid;
-            gap: 0.45rem;
+        /* DEEP MINE featured card specifics */
+        .project-card--dm .project-card__media {
+            background:
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.2), transparent 62%),
+                linear-gradient(135deg, #0a0c11, #141822);
+        }
+        .project-card--dm .project-card__media img {
+            object-fit: contain;
+            padding: 1.75rem;
         }
 
+        /* 3-image showcase inside DEEP MINE card */
+        .dm-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.55rem;
+            margin: 1.1rem 0 0.2rem;
+        }
+
+        .dm-showcase__item {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            padding: 0;
+            background: var(--surface-2);
+            cursor: zoom-in;
+            transition: border-color 0.3s ease, transform 0.3s var(--ease);
+        }
+        .dm-showcase__item:hover,
+        .dm-showcase__item:focus-visible {
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+        }
+        .dm-showcase__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--ease), opacity 0.3s ease;
+        }
+        .dm-showcase__item:hover img,
+        .dm-showcase__item:focus-visible img { transform: scale(1.07); }
+
+        .dm-showcase__item span {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            z-index: 2;
+            padding: 1.4rem 0.5rem 0.45rem;
+            background: linear-gradient(transparent, rgba(5, 6, 10, 0.92));
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* Combat feature list */
+        .feature-list {
+            list-style: none;
+            margin: 0.4rem 0 0;
+            padding: 0;
+            display: grid;
+            gap: 0.4rem;
+        }
         .feature-list li {
             display: flex;
             align-items: center;
@@ -783,7 +860,6 @@
             font-size: 0.87rem;
             color: var(--muted);
         }
-
         .feature-list li::before {
             content: "";
             width: 5px; height: 5px;
@@ -791,7 +867,6 @@
             background: var(--accent);
             flex-shrink: 0;
         }
-
         .feature-list kbd {
             font-family: var(--font-display);
             font-size: 0.68rem;
@@ -802,57 +877,6 @@
             border-radius: 5px;
             padding: 0.05rem 0.35rem;
             margin-left: auto;
-        }
-
-        /* DEEP MINE gallery */
-        .dm-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-            gap: 0.6rem;
-            padding: 0 clamp(1.4rem, 2.4vw, 2rem) clamp(1.4rem, 2.4vw, 2rem);
-            align-content: start;
-        }
-
-        .dm-shot {
-            position: relative;
-            display: block;
-            padding: 0;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            aspect-ratio: 1 / 1;
-            background:
-                linear-gradient(150deg, rgba(139, 92, 246, 0.22), rgba(30, 41, 59, 0.55) 60%, rgba(139, 92, 246, 0.12));
-            cursor: zoom-in;
-            transition: border-color 0.3s ease, transform 0.35s var(--ease);
-        }
-
-        .dm-shot:hover { border-color: rgba(139, 92, 246, 0.5); transform: translateY(-3px); }
-
-        .dm-shot img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s var(--ease), opacity 0.3s ease;
-        }
-
-        .dm-shot:hover img { transform: scale(1.07); }
-
-        .dm-shot__label {
-            position: absolute;
-            left: 0.55rem;
-            bottom: 0.55rem;
-            z-index: 2;
-            padding: 0.22rem 0.55rem;
-            border-radius: 6px;
-            background: rgba(6, 7, 11, 0.78);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            backdrop-filter: blur(6px);
-            font-size: 0.68rem;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: #fff;
         }
 
         /* =========================================================
@@ -917,15 +941,32 @@
             box-shadow: 0 26px 55px -34px rgba(139, 92, 246, 0.45), 0 18px 44px -34px #000;
         }
 
-        .tl-card .media { aspect-ratio: 16 / 9; }
+        .tl-card__media {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            padding: 0;
+            border: 0;
+            background: #000;
+            cursor: zoom-in;
+            overflow: hidden;
+        }
+
+        .tl-card__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s var(--ease);
+        }
+        .tl-card__media:hover img,
+        .tl-card__media:focus-visible img { transform: scale(1.05); }
 
         .tl-card__body { padding: 1.35rem 1.5rem 1.5rem; }
 
-        .tl-card__body h3 { margin-bottom: 0.35rem; }
+        .tl-card__body h3 { margin-bottom: 0.4rem; }
 
-        .tl-card__body .badge { margin-bottom: 0.7rem; }
-
-        .tl-card__body p { font-size: 0.89rem; }
+        .tl-card__body p { font-size: 0.9rem; }
 
         .tl-card__body .actions { margin-top: 1.1rem; }
 
@@ -966,7 +1007,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.7s var(--ease), filter 0.4s ease;
+            transition: transform 0.7s var(--ease);
         }
 
         .tile:hover,
@@ -1119,7 +1160,11 @@
             transition: transform 0.7s var(--ease);
         }
 
-        .showcase-item.is-image { cursor: zoom-in; }
+        .showcase-item.is-image {
+            cursor: zoom-in;
+            padding: 0;
+            border: 1px solid var(--border);
+        }
         .showcase-item.is-image:hover img { transform: scale(1.055); }
 
         .showcase-item.is-image::after {
@@ -1380,9 +1425,8 @@
         @media (max-width: 1024px) {
             .hero__inner { grid-template-columns: minmax(0, 1fr); }
             .hero__card { max-width: 480px; }
-            .project--wide { grid-template-columns: minmax(0, 1fr); }
-            .project--wide .media { min-height: 0; aspect-ratio: 16 / 9; }
-            .project--dm .dm-grid { order: 2; }
+            .project-card { grid-template-columns: minmax(0, 1fr); }
+            .project-card__media { min-height: 0; aspect-ratio: 16 / 9; }
         }
 
         @media (max-width: 900px) {
@@ -1418,8 +1462,6 @@
                 padding: 0.8rem 1rem;
                 font-size: 0.95rem;
             }
-
-            .projects__pair { grid-template-columns: minmax(0, 1fr); }
         }
 
         @media (max-width: 780px) {
@@ -1427,7 +1469,6 @@
 
             .hero { padding: 118px 0 72px; min-height: auto; }
 
-            /* Timeline -> single rail */
             .timeline::before { left: 9px; transform: none; }
 
             .tl-item,
@@ -1447,7 +1488,6 @@
         @media (max-width: 560px) {
             .container { padding: 0 18px; }
             .hero__actions .btn { width: 100%; }
-            .dm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .lightbox { padding: 64px 12px 84px; }
             .lightbox__nav--prev { left: 8px; bottom: 18px; top: auto; transform: none; }
             .lightbox__nav--next { right: 8px; bottom: 18px; top: auto; transform: none; }
@@ -1565,26 +1605,27 @@
                     <span class="eyebrow">Featured Work</span>
                     <h2>Main Projects</h2>
                     <p class="section-lead">
-                        A look at the projects I have built, tested and released — from solo releases
-                        to team collaborations and prototypes.
+                        My current releases and active prototypes, ordered chronologically.
+                        Each card shows status and release date.
                     </p>
                 </div>
 
                 <div class="projects">
 
                     <!-- RIFTBOUND -->
-                    <article class="project project--wide reveal">
-                        <button class="media" type="button"
+                    <article class="project-card reveal">
+                        <button class="project-card__media" type="button"
                                 data-img="images/riftbound-portal.png"
                                 data-caption="RIFTBOUND – Portal Gameplay"
                                 aria-label="Enlarge RIFTBOUND portal gameplay image">
                             <img src="images/riftbound-portal.png" alt="RIFTBOUND Portal Gameplay" loading="lazy">
                         </button>
-                        <div class="project__body">
-                            <div class="project__top">
-                                <h3>RIFTBOUND</h3>
-                                <span class="badge badge--released">Completed Release</span>
+                        <div class="project-card__body">
+                            <div class="project-meta">
+                                <span class="badge badge--released">Released</span>
+                                <time datetime="2026-10-25">Oct 25, 2026</time>
                             </div>
+                            <h3>RIFTBOUND</h3>
                             <p>
                                 A solo project that was successfully completed and released. The focus was
                                 on clean and efficient gameplay, utilizing ViewportFrames to implement the
@@ -1606,83 +1647,49 @@
                         </div>
                     </article>
 
-                    <!-- Last Battalion + Combat System -->
-                    <div class="projects__pair">
-
-                        <!-- Last Battalion (formerly WW1 Game) -->
-                        <article class="project reveal">
-                            <button class="media" type="button"
-                                    data-img="images/ww1-menu.png"
-                                    data-caption="Last Battalion – Environment and Menu"
-                                    aria-label="Enlarge Last Battalion environment image">
-                                <img src="images/ww1-menu.png" alt="Last Battalion Game Environment and Menu" loading="lazy">
-                            </button>
-                            <div class="project__body">
-                                <div class="project__top">
-                                    <h3>Last Battalion</h3>
-                                    <span class="badge badge--cancelled">Cancelled</span>
-                                </div>
-                                <p>
-                                    A Roblox project developed with a team, focusing on a World War 1 game
-                                    environment. The project is currently paused and was documented through
-                                    short videos on my social channels.
-                                </p>
-                                <div class="tags">
-                                    <span class="tag">Team Project</span>
-                                    <span class="tag">Environment</span>
-                                    <span class="tag">Cancelled</span>
-                                </div>
-                                <div class="actions">
-                                    <a class="btn btn--ghost btn--sm"
-                                       href="https://www.tiktok.com/@bfurstudiosofficial"
-                                       target="_blank" rel="noopener noreferrer">TikTok Updates</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Roblox Combat System -->
-                        <article class="project reveal">
-                            <button class="media" type="button"
-                                    data-img="images/combat-system.png"
-                                    data-caption="Roblox Combat System Prototype"
-                                    aria-label="Enlarge combat system prototype image">
-                                <img src="images/combat-system.png" alt="Roblox Combat System Prototype" loading="lazy">
-                            </button>
-                            <div class="project__body">
-                                <div class="project__top">
-                                    <h3>Roblox Combat System</h3>
-                                    <span class="badge badge--prototype">Prototype</span>
-                                </div>
-                                <p>
-                                    A prototype for an R15 combat system in Roblox Studio. It serves as an
-                                    interesting experiment for custom mechanics and animations.
-                                </p>
-                                <ul class="feature-list">
-                                    <li>Punch <kbd>M1</kbd></li>
-                                    <li>Fireball <kbd>E</kbd></li>
-                                    <li>Dash <kbd>Q</kbd></li>
-                                    <li>Block <kbd>F</kbd></li>
-                                </ul>
-                                <div class="tags">
-                                    <span class="tag">Prototype</span>
-                                    <span class="tag">Testing</span>
-                                    <span class="tag">Combat</span>
-                                </div>
-                            </div>
-                        </article>
-
-                    </div>
-
                     <!-- DEEP MINE -->
-                    <article class="project project--wide project--dm reveal">
-                        <div class="project__body">
-                            <div class="project__top">
-                                <h3>DEEP MINE</h3>
-                                <span class="badge badge--new">New</span>
+                    <article class="project-card project-card--dm reveal">
+                        <button class="project-card__media" type="button"
+                                data-img="images/deep-mine-icon.png"
+                                data-caption="DEEP MINE"
+                                aria-label="Enlarge DEEP MINE icon">
+                            <img src="images/deep-mine-icon.png" alt="DEEP MINE icon" loading="lazy">
+                        </button>
+                        <div class="project-card__body">
+                            <div class="project-meta">
+                                <span class="badge badge--released">Released</span>
+                                <time datetime="2026-10-31">Oct 31, 2026</time>
+                                <span class="badge badge--new">Latest</span>
                             </div>
+                            <h3>DEEP MINE</h3>
                             <p>
-                                A Roblox project built around pets, pickaxes and ores.
+                                A Roblox release built around pets, pickaxes and ores.
                             </p>
+
+                            <div class="dm-showcase">
+                                <button class="dm-showcase__item" type="button"
+                                        data-img="images/deep-mine-pets.png"
+                                        data-caption="DEEP MINE – Pets"
+                                        aria-label="Enlarge DEEP MINE pets image">
+                                    <img src="images/deep-mine-pets.png" alt="DEEP MINE Pets" loading="lazy">
+                                    <span>Pets</span>
+                                </button>
+                                <button class="dm-showcase__item" type="button"
+                                        data-img="images/deep-mine-pickaxes.png"
+                                        data-caption="DEEP MINE – Pickaxes"
+                                        aria-label="Enlarge DEEP MINE pickaxes image">
+                                    <img src="images/deep-mine-pickaxes.png" alt="DEEP MINE Pickaxes" loading="lazy">
+                                    <span>Pickaxes</span>
+                                </button>
+                                <button class="dm-showcase__item" type="button"
+                                        data-img="images/deep-mine-ores.png"
+                                        data-caption="DEEP MINE – Ores"
+                                        aria-label="Enlarge DEEP MINE ores image">
+                                    <img src="images/deep-mine-ores.png" alt="DEEP MINE Ores" loading="lazy">
+                                    <span>Ores</span>
+                                </button>
+                            </div>
+
                             <div class="tags">
                                 <span class="tag">Pets</span>
                                 <span class="tag">Pickaxes</span>
@@ -1694,29 +1701,37 @@
                                    target="_blank" rel="noopener noreferrer">Play on Roblox</a>
                             </div>
                         </div>
+                    </article>
 
-                        <div class="dm-grid">
-                            <button class="dm-shot" type="button"
-                                    data-img="images/deep-mine-pets.png"
-                                    data-caption="DEEP MINE – Pets"
-                                    aria-label="Enlarge DEEP MINE pets image">
-                                <img src="images/deep-mine-pets.png" alt="DEEP MINE Pets" loading="lazy">
-                                <span class="dm-shot__label">Pets</span>
-                            </button>
-                            <button class="dm-shot" type="button"
-                                    data-img="images/deep-mine-pickaxes.png"
-                                    data-caption="DEEP MINE – Pickaxes"
-                                    aria-label="Enlarge DEEP MINE pickaxes image">
-                                <img src="images/deep-mine-pickaxes.png" alt="DEEP MINE Pickaxes" loading="lazy">
-                                <span class="dm-shot__label">Pickaxes</span>
-                            </button>
-                            <button class="dm-shot" type="button"
-                                    data-img="images/deep-mine-ores.png"
-                                    data-caption="DEEP MINE – Ores"
-                                    aria-label="Enlarge DEEP MINE ores image">
-                                <img src="images/deep-mine-ores.png" alt="DEEP MINE Ores" loading="lazy">
-                                <span class="dm-shot__label">Ores</span>
-                            </button>
+                    <!-- Roblox Combat System -->
+                    <article class="project-card reveal">
+                        <button class="project-card__media" type="button"
+                                data-img="images/combat-system.png"
+                                data-caption="Roblox Combat System Prototype"
+                                aria-label="Enlarge combat system prototype image">
+                            <img src="images/combat-system.png" alt="Roblox Combat System Prototype" loading="lazy">
+                        </button>
+                        <div class="project-card__body">
+                            <div class="project-meta">
+                                <span class="badge badge--prototype">Prototype</span>
+                                <time class="unknown">Ongoing</time>
+                            </div>
+                            <h3>Roblox Combat System</h3>
+                            <p>
+                                A prototype for an R15 combat system in Roblox Studio. It serves as an
+                                interesting experiment for custom mechanics and animations.
+                            </p>
+                            <ul class="feature-list">
+                                <li>Punch <kbd>M1</kbd></li>
+                                <li>Fireball <kbd>E</kbd></li>
+                                <li>Dash <kbd>Q</kbd></li>
+                                <li>Block <kbd>F</kbd></li>
+                            </ul>
+                            <div class="tags">
+                                <span class="tag">Prototype</span>
+                                <span class="tag">Testing</span>
+                                <span class="tag">Combat</span>
+                            </div>
                         </div>
                     </article>
 
@@ -1729,10 +1744,10 @@
             <div class="container">
                 <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
                     <span class="eyebrow" style="justify-content:center;">The Journey</span>
-                    <h2>The Evolution of My Games</h2>
+                    <h2>Evolution of My Games</h2>
                     <p class="section-lead" style="margin:0 auto;">
                         My development journey started with simple ideas and has grown into more complex
-                        systems. Here is a look back at my previous releases that paved the way.
+                        systems. Here is a look back at my previous releases in chronological order.
                     </p>
                 </div>
 
@@ -1741,15 +1756,18 @@
                     <!-- A Game About a Lamp -->
                     <div class="tl-item reveal">
                         <div class="tl-card">
-                            <button class="media" type="button"
+                            <button class="tl-card__media" type="button"
                                     data-img="images/game-lamp.png"
                                     data-caption="A Game About a Lamp"
                                     aria-label="Enlarge A Game About a Lamp thumbnail">
                                 <img src="images/game-lamp.png" alt="A Game About a Lamp Thumbnail" loading="lazy">
                             </button>
                             <div class="tl-card__body">
+                                <div class="project-meta">
+                                    <span class="badge badge--released">Released</span>
+                                    <time datetime="2025-10-28">Oct 28, 2025</time>
+                                </div>
                                 <h3>A Game About a Lamp</h3>
-                                <span class="badge badge--past">The Beginning</span>
                                 <p>
                                     The very first step of my journey. A simple, experimental game that taught
                                     me the basics of Roblox Studio and how to bring a simple concept to life.
@@ -1766,15 +1784,18 @@
                     <!-- Jump Master Obby -->
                     <div class="tl-item reveal">
                         <div class="tl-card">
-                            <button class="media" type="button"
+                            <button class="tl-card__media" type="button"
                                     data-img="images/jump-master.png"
                                     data-caption="Jump Master Obby"
                                     aria-label="Enlarge Jump Master Obby thumbnail">
                                 <img src="images/jump-master.png" alt="Jump Master Obby Thumbnail" loading="lazy">
                             </button>
                             <div class="tl-card__body">
+                                <div class="project-meta">
+                                    <span class="badge badge--released">Released</span>
+                                    <time datetime="2025-11-30">Nov 30, 2025</time>
+                                </div>
                                 <h3>Jump Master Obby</h3>
-                                <span class="badge badge--past">Level Design</span>
                                 <p>
                                     Moving from a simple concept to level design. This Obby helped me understand
                                     player movement, obstacle placement, and basic game pacing.
@@ -1791,15 +1812,18 @@
                     <!-- The Escape: Cave -->
                     <div class="tl-item reveal">
                         <div class="tl-card">
-                            <button class="media" type="button"
+                            <button class="tl-card__media" type="button"
                                     data-img="images/escape-cave.png"
                                     data-caption="The Escape: Cave"
                                     aria-label="Enlarge The Escape: Cave thumbnail">
                                 <img src="images/escape-cave.png" alt="The Escape: Cave Thumbnail" loading="lazy">
                             </button>
                             <div class="tl-card__body">
+                                <div class="project-meta">
+                                    <span class="badge badge--released">Released</span>
+                                    <time datetime="2026-05-05">May 5, 2026</time>
+                                </div>
                                 <h3>The Escape: Cave</h3>
-                                <span class="badge badge--past">Puzzle &amp; Atmosphere</span>
                                 <p>
                                     Stepping into puzzle mechanics and atmospheric design. This project was about
                                     creating tension and giving the player a sense of exploration.
@@ -1813,14 +1837,46 @@
                         </div>
                     </div>
 
+                    <!-- Last Battalion -->
+                    <div class="tl-item reveal">
+                        <div class="tl-card">
+                            <button class="tl-card__media" type="button"
+                                    data-img="images/ww1-menu.png"
+                                    data-caption="Last Battalion – Environment and Menu"
+                                    aria-label="Enlarge Last Battalion thumbnail">
+                                <img src="images/ww1-menu.png" alt="Last Battalion Game Environment and Menu" loading="lazy">
+                            </button>
+                            <div class="tl-card__body">
+                                <div class="project-meta">
+                                    <span class="badge badge--cancelled">Cancelled</span>
+                                    <time class="unknown">Before RIFTBOUND</time>
+                                </div>
+                                <h3>Last Battalion</h3>
+                                <p>
+                                    A Roblox project developed with a team, focusing on a World War 1 game
+                                    environment. The project was documented through short videos on my social
+                                    channels.
+                                </p>
+                                <div class="tags">
+                                    <span class="tag">Team Project</span>
+                                    <span class="tag">Environment</span>
+                                </div>
+                                <div class="actions">
+                                    <a class="btn btn--ghost btn--sm"
+                                       href="https://www.tiktok.com/@bfurstudiosofficial"
+                                       target="_blank" rel="noopener noreferrer">TikTok Updates</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Next Chapter -->
                     <div class="tl-item reveal">
                         <div class="tl-card tl-card--next">
                             <h3>The Next Chapter</h3>
                             <p>
-                                From these early projects, I moved on to more advanced systems like
-                                Last Battalion, RIFTBOUND, and my Combat Prototypes. I am constantly
-                                working on new projects to expand my skills.
+                                From these early projects, I moved on to RIFTBOUND, DEEP MINE and my ongoing
+                                Combat Prototype. I'm constantly working on new projects to expand my skills.
                             </p>
                         </div>
                     </div>
@@ -2012,7 +2068,7 @@
 
                     <div class="showcase-item reveal">
                         <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c"
-                                title="WW1 Character Selection" loading="lazy" allowfullscreen
+                                title="Last Battalion – Character Selection" loading="lazy" allowfullscreen
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                     </div>
 
@@ -2024,9 +2080,9 @@
 
                     <button class="showcase-item is-image reveal" type="button"
                             data-img="images/ww1-form.png"
-                            data-caption="WW1 Conscription Document UI"
-                            aria-label="Enlarge WW1 conscription document UI image">
-                        <img src="images/ww1-form.png" alt="WW1 Conscription Document UI" loading="lazy">
+                            data-caption="Last Battalion – Conscription Document UI"
+                            aria-label="Enlarge conscription document UI image">
+                        <img src="images/ww1-form.png" alt="Last Battalion Conscription Document UI" loading="lazy">
                     </button>
 
                     <button class="showcase-item is-image reveal" type="button"
@@ -2214,15 +2270,11 @@
             var doc = document;
             var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            /* -----------------------------------------------------
-               1. Dynamic footer year
-               ----------------------------------------------------- */
+            /* 1. Dynamic footer year */
             var yearEl = doc.getElementById('year');
             if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
 
-            /* -----------------------------------------------------
-               2. Header state + scroll progress
-               ----------------------------------------------------- */
+            /* 2. Header state + scroll progress */
             var header = doc.getElementById('siteHeader');
             var progress = doc.getElementById('scrollProgress');
 
@@ -2235,13 +2287,10 @@
                     progress.style.transform = 'scaleX(' + ratio + ')';
                 }
             }
-
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
 
-            /* -----------------------------------------------------
-               3. Mobile navigation
-               ----------------------------------------------------- */
+            /* 3. Mobile navigation */
             var menuBtn = doc.getElementById('mobileMenuBtn');
             var navLinks = doc.getElementById('navLinks');
 
@@ -2259,30 +2308,24 @@
                     menuBtn.setAttribute('aria-expanded', String(open));
                 });
 
-                // Close after choosing a link
                 Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (link) {
                     link.addEventListener('click', closeMenu);
                 });
 
-                // Close on outside click
                 doc.addEventListener('click', function (e) {
                     if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) { closeMenu(); }
                 });
 
-                // Close on Escape
                 doc.addEventListener('keydown', function (e) {
                     if (e.key === 'Escape') { closeMenu(); }
                 });
 
-                // Close when resizing up to desktop
                 window.addEventListener('resize', function () {
                     if (window.innerWidth > 900) { closeMenu(); }
                 });
             }
 
-            /* -----------------------------------------------------
-               4. Active navigation link on scroll
-               ----------------------------------------------------- */
+            /* 4. Active nav link on scroll */
             var sectionEls = Array.prototype.slice.call(doc.querySelectorAll('main section[id]'));
             var linkById = {};
             if (navLinks) {
@@ -2307,16 +2350,13 @@
                 sectionEls.forEach(function (section) { navObserver.observe(section); });
             }
 
-            /* -----------------------------------------------------
-               5. Scroll reveal
-               ----------------------------------------------------- */
+            /* 5. Scroll reveal */
             var revealEls = Array.prototype.slice.call(doc.querySelectorAll('.reveal'));
 
             if (reduceMotion || !('IntersectionObserver' in window)) {
                 revealEls.forEach(function (el) { el.classList.add('is-visible'); });
             } else {
                 var counters = new Map();
-
                 var revealObserver = new IntersectionObserver(function (entries, observer) {
                     entries.forEach(function (entry) {
                         if (!entry.isIntersecting) { return; }
@@ -2330,19 +2370,14 @@
                     var index = counters.get(parent) || 0;
                     counters.set(parent, index + 1);
                     el.style.transitionDelay = Math.min(index, 5) * 70 + 'ms';
-
-                    // Reset the delay once the entrance is done so later transitions stay snappy
                     el.addEventListener('transitionend', function () {
                         el.style.transitionDelay = '0ms';
                     }, { once: true });
-
                     revealObserver.observe(el);
                 });
             }
 
-            /* -----------------------------------------------------
-               6. Lightbox (with gallery navigation)
-               ----------------------------------------------------- */
+            /* 6. Lightbox with gallery navigation */
             var lightbox = doc.getElementById('lightbox');
             var lightboxImg = doc.getElementById('lightboxImg');
             var lightboxCaption = doc.getElementById('lightboxCaption');
@@ -2359,7 +2394,6 @@
                 var item = items[currentIndex];
                 var caption = item.getAttribute('data-caption') || '';
                 var innerImg = item.querySelector('img');
-
                 lightboxImg.src = item.getAttribute('data-img');
                 lightboxImg.alt = caption || (innerImg ? innerImg.alt : 'Enlarged image');
                 lightboxCaption.textContent = caption;
@@ -2388,7 +2422,7 @@
                 }
             }
 
-            // Public API kept for backwards compatibility
+            /* Public API for backwards compatibility */
             window.openLightbox = function (src, caption) {
                 var idx = -1;
                 for (var i = 0; i < items.length; i++) {
@@ -2410,30 +2444,23 @@
                 }
             };
 
-            // Bind triggers
             items.forEach(function (item, index) {
                 item.addEventListener('click', function () { openLightboxElement(index); });
             });
 
             if (lightbox) {
                 lightboxClose.addEventListener('click', closeLightbox);
-
                 lightboxPrev.addEventListener('click', function (e) {
                     e.stopPropagation();
                     showItem(currentIndex - 1);
                 });
-
                 lightboxNext.addEventListener('click', function (e) {
                     e.stopPropagation();
                     showItem(currentIndex + 1);
                 });
-
-                // Backdrop click closes
                 lightbox.addEventListener('click', function (e) {
                     if (e.target === lightbox) { closeLightbox(); }
                 });
-
-                // Keyboard controls
                 doc.addEventListener('keydown', function (e) {
                     if (!lightbox.classList.contains('is-open')) { return; }
                     if (e.key === 'Escape') { closeLightbox(); }
@@ -2442,15 +2469,11 @@
                 });
             }
 
-            /* -----------------------------------------------------
-               7. Graceful fallback for images not yet added
-                  (currently only the DEEP MINE screenshots)
-               ----------------------------------------------------- */
-            Array.prototype.forEach.call(doc.querySelectorAll('.dm-shot img'), function (img) {
-                img.addEventListener('error', function () {
-                    img.style.opacity = '0';
-                });
-                if (img.complete && img.naturalWidth === 0) { img.style.opacity = '0'; }
+            /* 7. Graceful fallback for images that have not been added yet */
+            Array.prototype.forEach.call(doc.querySelectorAll('.dm-showcase__item img, .project-card--dm .project-card__media img'), function (img) {
+                function hide() { img.style.opacity = '0'; }
+                img.addEventListener('error', hide);
+                if (img.complete && img.naturalWidth === 0) { hide(); }
             });
 
         })();
