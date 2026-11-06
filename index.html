@@ -5,756 +5,1718 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baumeister | Roblox Developer Portfolio</title>
     <meta name="description" content="Portfolio of Baumeister, a Roblox developer focusing on scripting, gameplay mechanics, and building.">
-    
+
+    <!-- Prevent FOUC for scroll-reveal (JS adds .js) -->
+    <script>document.documentElement.classList.add('js');</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- CSS Variables --- */
+        /* =========================================================
+           1. Design Tokens
+           ========================================================= */
         :root {
-            --bg-color: #0d0d0d;
-            --surface-color: #1a1a1a;
-            --surface-hover: #242424;
-            --text-main: #f0f0f0;
-            --text-muted: #a0a0a0;
-            --accent: #8b5cf6; /* Subtle violet */
-            --accent-hover: #7c3aed;
-            --border-color: #333333;
-            --radius: 12px;
-            --transition: all 0.3s ease;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg:            #07080b;
+            --bg-soft:       #0a0c11;
+            --surface:       #0f1218;
+            --surface-2:     #141822;
+            --surface-3:     #1a1f2b;
+
+            --border:        rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.15);
+
+            --text:          #e9ecf3;
+            --text-strong:   #ffffff;
+            --muted:         #8d95a6;
+
+            --accent:        #8b5cf6;
+            --accent-light:  #a78bfa;
+            --accent-glow:   rgba(139, 92, 246, 0.35);
+
+            --radius:        16px;
+            --radius-sm:     10px;
+            --radius-lg:     24px;
+
+            --shadow-soft:   0 24px 60px -30px rgba(0, 0, 0, 0.9);
+            --shadow-accent: 0 24px 70px -35px var(--accent-glow);
+
+            --font-display:  'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+            --max:           1180px;
+            --ease:          cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* --- Reset & Base Styles --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* =========================================================
+           2. Reset & Base
+           ========================================================= */
+        *, *::before, *::after { box-sizing: border-box; }
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 96px;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
+            margin: 0;
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.65;
+            background-color: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: var(--transition);
+        body.no-scroll { overflow: hidden; }
+
+        img, iframe, svg { display: block; max-width: 100%; }
+        img { height: auto; }
+
+        a { color: var(--accent-light); text-decoration: none; transition: color 0.25s ease; }
+        a:hover, a:focus-visible { color: #c4b5fd; }
+
+        button { font-family: inherit; }
+
+        ::selection { background: rgba(139, 92, 246, 0.35); color: #fff; }
+
+        :focus-visible {
+            outline: 2px solid var(--accent-light);
+            outline-offset: 3px;
+            border-radius: 4px;
         }
 
-        a:hover, a:focus {
-            color: var(--accent-hover);
-        }
-
-        img, iframe {
-            max-width: 100%;
-            display: block;
-        }
-
-        /* --- Typography --- */
+        /* =========================================================
+           3. Typography
+           ========================================================= */
         h1, h2, h3, h4 {
-            line-height: 1.2;
-            margin-bottom: 0.5em;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--text-strong);
+            margin: 0 0 0.6em;
         }
 
-        h1 { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.02em; }
-        h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem; }
-        h3 { font-size: 1.5rem; }
-        p { margin-bottom: 1rem; color: var(--text-muted); }
+        h1 {
+            font-size: clamp(2.5rem, 5.6vw, 4.1rem);
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.05;
+        }
 
-        /* --- Layout Utilities --- */
+        h2 { font-size: clamp(1.85rem, 3.6vw, 2.7rem); }
+        h3 { font-size: 1.22rem; letter-spacing: -0.01em; }
+
+        p { margin: 0 0 1rem; color: var(--muted); }
+        p:last-child { margin-bottom: 0; }
+
+        /* =========================================================
+           4. Layout Helpers
+           ========================================================= */
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: var(--max);
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
-        section {
-            padding: 5rem 0;
-        }
+        .section { padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
+        .section--alt { background: var(--bg-soft); }
 
-        /* --- Buttons --- */
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+        .section-head { max-width: 740px; margin-bottom: clamp(2.5rem, 5vw, 3.75rem); }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid transparent;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 1.1rem;
         }
 
-        .btn-primary {
-            background-color: var(--accent);
-            color: #fff;
+        .eyebrow::before {
+            content: "";
+            width: 26px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), transparent);
         }
 
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-            color: #fff;
+        .section-head h2 { margin-bottom: 0.85rem; }
+
+        .section-lead {
+            font-size: 1.02rem;
+            color: var(--muted);
+            max-width: 62ch;
         }
 
-        .btn-secondary {
-            background-color: transparent;
-            border-color: var(--border-color);
-            color: var(--text-main);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* --- Navigation --- */
-        header {
-            position: fixed;
+        .skip-link {
+            position: absolute;
+            left: -9999px;
             top: 0;
-            left: 0;
+            z-index: 2000;
+            padding: 0.75rem 1.25rem;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 0 0 8px 0;
+            font-weight: 600;
+        }
+        .skip-link:focus { left: 0; }
+
+        /* Page background glow */
+        .page-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(1100px 620px at 12% -12%, rgba(139, 92, 246, 0.16), transparent 65%),
+                radial-gradient(900px 520px at 94% 2%, rgba(59, 130, 246, 0.08), transparent 62%),
+                radial-gradient(900px 700px at 50% 118%, rgba(139, 92, 246, 0.07), transparent 65%);
+        }
+
+        main, footer { position: relative; z-index: 1; }
+
+        /* Scroll progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
             width: 100%;
-            background-color: rgba(13, 13, 13, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
+            height: 2px;
+            z-index: 1200;
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            background: linear-gradient(90deg, var(--accent), #c4b5fd, #60a5fa);
+            pointer-events: none;
+        }
+
+        /* =========================================================
+           5. Buttons
+           ========================================================= */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding: 0.85rem 1.55rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.93rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
+            border: 1px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.25s var(--ease), background 0.25s ease,
+                        border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+        }
+
+        .btn--primary {
+            background: linear-gradient(180deg, #9b70f9 0%, #7c3aed 100%);
+            color: #fff;
+            box-shadow: 0 12px 30px -14px rgba(139, 92, 246, 0.95),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        }
+        .btn--primary:hover,
+        .btn--primary:focus-visible {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 18px 42px -16px rgba(139, 92, 246, 1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        }
+
+        .btn--ghost {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-strong);
+            color: var(--text);
+        }
+        .btn--ghost:hover,
+        .btn--ghost:focus-visible {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.28);
+            color: var(--text-strong);
+            transform: translateY(-2px);
+        }
+
+        .btn--sm { padding: 0.6rem 1.05rem; font-size: 0.83rem; }
+
+        /* =========================================================
+           6. Header / Navigation
+           ========================================================= */
+        .site-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
+            background: rgba(7, 8, 11, 0.55);
+            backdrop-filter: blur(18px) saturate(150%);
+            -webkit-backdrop-filter: blur(18px) saturate(150%);
+            border-bottom: 1px solid transparent;
+            transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .site-header.is-scrolled {
+            background: rgba(7, 8, 11, 0.88);
+            border-bottom-color: var(--border);
+            box-shadow: 0 14px 40px -30px #000;
         }
 
         .nav-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            height: 70px;
+            justify-content: space-between;
+            gap: 1.5rem;
+            height: 76px;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text-strong);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+            flex-shrink: 0;
+        }
+        .logo:hover { color: var(--text-strong); }
+
+        .logo__mark {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: linear-gradient(140deg, #a78bfa, #6d28d9);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 8px 22px -10px rgba(139, 92, 246, 0.9),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .logo__text { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo__text small {
+            font-family: var(--font-body);
+            font-size: 0.63rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 3px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            align-items: center;
+            gap: 0.2rem;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            display: block;
+            padding: 0.55rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.87rem;
             font-weight: 500;
-            font-size: 0.95rem;
+            color: var(--muted);
+            transition: color 0.22s ease, background 0.22s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--text-main);
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--text-strong);
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .mobile-menu-btn {
+        .nav-links a.is-active {
+            color: var(--text-strong);
+            background: rgba(139, 92, 246, 0.14);
+            box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.25);
+        }
+
+        .menu-btn {
             display: none;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.5rem;
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
             cursor: pointer;
+            padding: 0;
+            place-items: center;
+            transition: border-color 0.25s ease, background 0.25s ease;
         }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.07); border-color: var(--border-strong); }
 
-        /* --- Hero Section --- */
-        #hero {
-            min-height: 100vh;
+        .menu-btn__bars {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+        .menu-btn__bars span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--text);
+            transition: transform 0.3s var(--ease), opacity 0.2s ease;
+        }
+        .menu-btn.is-active .menu-btn__bars span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .menu-btn.is-active .menu-btn__bars span:nth-child(2) { opacity: 0; }
+        .menu-btn.is-active .menu-btn__bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+        /* =========================================================
+           7. Hero
+           ========================================================= */
+        .hero {
+            position: relative;
+            min-height: 100svh;
             display: flex;
             align-items: center;
-            padding-top: 70px;
-            background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero-subtitle {
-            color: var(--accent);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        /* Das Motto */
-        .hero-motto {
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--accent);
-            padding-left: 1.5rem;
-            line-height: 1.3;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        /* --- Projects Section --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background-color: var(--surface-color);
-            border-radius: var(--radius);
-            border: 1px solid var(--border-color);
+            padding: 130px 0 90px;
             overflow: hidden;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: #444;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .hero__grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 64px 64px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 20%, transparent 80%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 20%, transparent 80%);
+            pointer-events: none;
         }
 
-        .project-media {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
+        .hero__inner {
             position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+            gap: clamp(2.5rem, 5vw, 4.5rem);
+            align-items: center;
         }
 
-        .project-media iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .project-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .project-media:hover img {
-            transform: scale(1.05);
-        }
-
-        .project-info {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .project-status {
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            background-color: #333;
-            color: #ccc;
+        .hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.72rem;
             font-weight: 600;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 1.4rem;
+            padding: 0.45rem 0.9rem 0.45rem 0.6rem;
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            border-radius: 999px;
+            background: rgba(139, 92, 246, 0.08);
         }
 
-        .status-released { background-color: #0f5132; color: #75b798; }
-        .status-wip { background-color: #4a3b00; color: #ffd700; }
-        .status-team { background-color: #003b4a; color: #00e5ff; }
-        .status-past { background-color: #3b3b3b; color: #aaa; }
+        .hero__eyebrow .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.18);
+        }
 
-        .project-tags {
+        .hero h1 { margin-bottom: 1.4rem; }
+
+        .hero h1 .grad {
+            background: linear-gradient(100deg, #c4b5fd 0%, #8b5cf6 45%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero__text {
+            font-size: 1.05rem;
+            max-width: 56ch;
+            color: var(--muted);
+        }
+
+        .hero__actions {
             display: flex;
             flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2.2rem;
+        }
+
+        /* Hero profile card */
+        .hero__card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012));
+            box-shadow: var(--shadow-soft), var(--shadow-accent);
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+        }
+
+        .hero__card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(420px 220px at 85% -10%, rgba(139, 92, 246, 0.22), transparent 70%);
+            pointer-events: none;
+        }
+
+        .window-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.85rem 1.15rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .window-bar i {
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.16);
+        }
+        .window-bar i:nth-child(1) { background: #f87171; opacity: 0.75; }
+        .window-bar i:nth-child(2) { background: #fbbf24; opacity: 0.75; }
+        .window-bar i:nth-child(3) { background: #34d399; opacity: 0.75; }
+        .window-bar em {
+            margin-left: auto;
+            font-style: normal;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .hero__card-body { padding: 1.5rem; position: relative; }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
             gap: 0.5rem;
-            margin-top: auto;
-            padding-top: 1rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 1.4rem;
+        }
+
+        .status-pill .pulse {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #34d399;
+            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+            animation: pulse 2.2s infinite;
+        }
+
+        @keyframes pulse {
+            0%   { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+            70%  { box-shadow: 0 0 0 9px rgba(52, 211, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .facts {
+            display: grid;
+            gap: 1px;
+            margin: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--border);
+        }
+
+        .facts > div {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            background: rgba(11, 13, 18, 0.75);
+        }
+
+        .facts dt {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.38);
+            font-weight: 600;
+        }
+
+        .facts dd {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: right;
+        }
+
+        /* Hero entrance animation */
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        .hero__content > * { opacity: 0; animation: rise 0.9s var(--ease) forwards; }
+        .hero__content > *:nth-child(1) { animation-delay: 0.05s; }
+        .hero__content > *:nth-child(2) { animation-delay: 0.13s; }
+        .hero__content > *:nth-child(3) { animation-delay: 0.21s; }
+        .hero__content > *:nth-child(4) { animation-delay: 0.29s; }
+        .hero__content > *:nth-child(5) { animation-delay: 0.37s; }
+
+        .hero__card { opacity: 0; animation: rise 1s var(--ease) 0.3s forwards; }
+
+        /* =========================================================
+           8. Scroll Reveal
+           ========================================================= */
+        .js .reveal {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+            will-change: opacity, transform;
+        }
+        .js .reveal.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* =========================================================
+           9. Badges & Tags
+           ========================================================= */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.65rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .badge--released  { color: #6ee7b7; background: rgba(16, 185, 129, 0.1);  border-color: rgba(16, 185, 129, 0.28); }
+        .badge--cancelled { color: #fca5a5; background: rgba(239, 68, 68, 0.1);   border-color: rgba(239, 68, 68, 0.26); }
+        .badge--prototype { color: #fcd34d; background: rgba(245, 158, 11, 0.1);  border-color: rgba(245, 158, 11, 0.28); }
+        .badge--past      { color: #9ca3af; background: rgba(156, 163, 175, 0.08); border-color: rgba(156, 163, 175, 0.22); }
+        .badge--new       { color: #c4b5fd; background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.38); }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 1.3rem;
         }
 
         .tag {
-            font-size: 0.75rem;
-            background-color: #2a2a2a;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            color: var(--text-muted);
+            padding: 0.28rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.035);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: #a9b1c1;
         }
 
-        /* --- Evolution / Previous Releases Section --- */
-        .evolution-container {
+        /* =========================================================
+           10. Media (clickable images)
+           ========================================================= */
+        .media {
             position: relative;
-            max-width: 900px;
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            background: #000;
+            cursor: zoom-in;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+        }
+
+        .media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s var(--ease), filter 0.4s ease;
+        }
+
+        .media::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(180deg, transparent 45%, rgba(5, 6, 10, 0.65));
+            opacity: 0.7;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .media::after {
+            content: "View";
+            position: absolute;
+            right: 0.9rem;
+            bottom: 0.9rem;
+            z-index: 2;
+            padding: 0.32rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(8, 9, 13, 0.72);
+            backdrop-filter: blur(8px);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .media:hover img,
+        .media:focus-visible img { transform: scale(1.055); }
+
+        .media:hover::after,
+        .media:focus-visible::after { opacity: 1; transform: none; }
+
+        .media:hover::before { opacity: 0.4; }
+
+        /* =========================================================
+           11. Project Cards
+           ========================================================= */
+        .projects {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .projects__pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
+            overflow: hidden;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+        }
+
+        .project:hover {
+            border-color: rgba(139, 92, 246, 0.38);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.06), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 28px 60px -34px rgba(139, 92, 246, 0.55), 0 20px 50px -34px #000;
+        }
+
+        .project--wide {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            align-items: stretch;
+        }
+
+        .project--wide .media {
+            aspect-ratio: auto;
+            height: 100%;
+            min-height: 300px;
+        }
+
+        .project--dm { grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); }
+
+        .project__body {
+            display: flex;
+            flex-direction: column;
+            padding: clamp(1.4rem, 2.4vw, 2rem);
+            flex-grow: 1;
+        }
+
+        .project__top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .project__top h3 { margin: 0; }
+
+        .project__body > p { font-size: 0.94rem; }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.4rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 0 0 0.4rem;
+            padding: 0;
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.87rem;
+            color: var(--muted);
+        }
+
+        .feature-list li::before {
+            content: "";
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .feature-list kbd {
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            border-radius: 5px;
+            padding: 0.05rem 0.35rem;
+            margin-left: auto;
+        }
+
+        /* DEEP MINE gallery */
+        .dm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+            gap: 0.6rem;
+            padding: 0 clamp(1.4rem, 2.4vw, 2rem) clamp(1.4rem, 2.4vw, 2rem);
+            align-content: start;
+        }
+
+        .dm-shot {
+            position: relative;
+            display: block;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            background:
+                linear-gradient(150deg, rgba(139, 92, 246, 0.22), rgba(30, 41, 59, 0.55) 60%, rgba(139, 92, 246, 0.12));
+            cursor: zoom-in;
+            transition: border-color 0.3s ease, transform 0.35s var(--ease);
+        }
+
+        .dm-shot:hover { border-color: rgba(139, 92, 246, 0.5); transform: translateY(-3px); }
+
+        .dm-shot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--ease), opacity 0.3s ease;
+        }
+
+        .dm-shot:hover img { transform: scale(1.07); }
+
+        .dm-shot__label {
+            position: absolute;
+            left: 0.55rem;
+            bottom: 0.55rem;
+            z-index: 2;
+            padding: 0.22rem 0.55rem;
+            border-radius: 6px;
+            background: rgba(6, 7, 11, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(6px);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* =========================================================
+           12. Evolution Timeline
+           ========================================================= */
+        .timeline {
+            position: relative;
+            max-width: 920px;
             margin: 0 auto;
         }
 
-        .evolution-container::before {
-            content: '';
+        .timeline::before {
+            content: "";
             position: absolute;
+            top: 8px;
+            bottom: 8px;
             left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--border-color);
+            width: 1px;
             transform: translateX(-50%);
+            background: linear-gradient(180deg, transparent, var(--border-strong) 12%, var(--border-strong) 88%, transparent);
         }
 
-        .evolution-item {
+        .tl-item {
+            position: relative;
             display: flex;
             justify-content: flex-end;
-            padding-right: 50%;
-            position: relative;
-            margin-bottom: 3rem;
+            padding-right: calc(50% + 34px);
+            margin-bottom: 2.25rem;
         }
 
-        .evolution-item:nth-child(even) {
+        .tl-item:nth-child(even) {
             justify-content: flex-start;
             padding-right: 0;
-            padding-left: 50%;
+            padding-left: calc(50% + 34px);
         }
 
-        .evolution-item::after {
-            content: '';
+        .tl-item::after {
+            content: "";
             position: absolute;
             left: 50%;
-            top: 20px;
-            width: 16px;
-            height: 16px;
-            background-color: var(--accent);
+            top: 26px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             transform: translateX(-50%);
-            border: 4px solid var(--bg-color);
+            background: var(--accent);
+            box-shadow: 0 0 0 5px rgba(139, 92, 246, 0.16), 0 0 22px 2px rgba(139, 92, 246, 0.5);
             z-index: 1;
         }
 
-        .evolution-content {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            width: 90%;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .evolution-content:hover {
-            border-color: #444;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .evolution-content img {
+        .tl-card {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            overflow: hidden;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .tl-card:hover {
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 26px 55px -34px rgba(139, 92, 246, 0.45), 0 18px 44px -34px #000;
+        }
+
+        .tl-card .media { aspect-ratio: 16 / 9; }
+
+        .tl-card__body { padding: 1.35rem 1.5rem 1.5rem; }
+
+        .tl-card__body h3 { margin-bottom: 0.35rem; }
+
+        .tl-card__body .badge { margin-bottom: 0.7rem; }
+
+        .tl-card__body p { font-size: 0.89rem; }
+
+        .tl-card__body .actions { margin-top: 1.1rem; }
+
+        .tl-card--next {
+            border-style: dashed;
+            border-color: rgba(139, 92, 246, 0.45);
+            background: rgba(139, 92, 246, 0.05);
+            text-align: center;
+            padding: 1.9rem 1.5rem;
+        }
+
+        .tl-card--next h3 { color: var(--accent-light); margin-bottom: 0.6rem; }
+
+        /* =========================================================
+           13. Building Gallery
+           ========================================================= */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .tile {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background: var(--surface-2);
+            cursor: zoom-in;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .tile img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            cursor: pointer;
+            transition: transform 0.7s var(--ease), filter 0.4s ease;
         }
 
-        .evolution-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+        .tile:hover,
+        .tile:focus-visible {
+            border-color: rgba(139, 92, 246, 0.45);
+            box-shadow: 0 26px 55px -34px rgba(139, 92, 246, 0.5);
         }
 
-        .evolution-content p {
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+        .tile:hover img,
+        .tile:focus-visible img { transform: scale(1.07); }
+
+        .tile__label {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            z-index: 2;
+            padding: 2.4rem 0.95rem 0.85rem;
+            text-align: left;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(transparent, rgba(5, 6, 10, 0.92));
+            pointer-events: none;
         }
 
-        /* --- Skills Section --- */
+        /* =========================================================
+           14. Skills
+           ========================================================= */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
         }
 
-        .skill-category {
-            background-color: var(--surface-color);
-            padding: 1.5rem;
+        .skill-card {
+            padding: 1.6rem;
             border-radius: var(--radius);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .skill-category h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+        .skill-card:hover {
+            border-color: rgba(139, 92, 246, 0.32);
+            box-shadow: 0 24px 55px -36px rgba(139, 92, 246, 0.5);
         }
+
+        .skill-card__head {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .skill-card__icon {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            color: var(--accent-light);
+            flex-shrink: 0;
+        }
+
+        .skill-card__icon svg { width: 20px; height: 20px; }
+
+        .skill-card h3 { margin: 0; font-size: 1.06rem; }
 
         .skill-list {
             list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.6rem;
         }
 
         .skill-list li {
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
             position: relative;
-            color: var(--text-muted);
+            padding-left: 1.4rem;
+            font-size: 0.9rem;
+            color: var(--muted);
         }
 
         .skill-list li::before {
-            content: "▹";
+            content: "";
             position: absolute;
             left: 0;
-            color: var(--accent);
+            top: 0.62em;
+            width: 6px;
+            height: 6px;
+            border-radius: 2px;
+            transform: rotate(45deg);
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
         }
 
-        /* --- About Section --- */
-        .about-content {
+        /* =========================================================
+           15. About
+           ========================================================= */
+        .about {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
-            font-size: 1.1rem;
         }
 
-        .about-content p {
-            color: var(--text-main);
-            margin-bottom: 1.5rem;
+        .about p {
+            font-size: 1.05rem;
+            color: #c2c9d6;
+            margin-bottom: 1.4rem;
         }
 
-        /* --- Video & Image Showcase --- */
+        .about p:last-child { margin-bottom: 0; }
+
+        /* =========================================================
+           16. Showcase
+           ========================================================= */
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .building-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 1.25rem;
         }
 
         .showcase-item {
             position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border-radius: var(--radius);
+            border-radius: 14px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
+            border: 1px solid var(--border);
+            background: #000;
+            aspect-ratio: 16 / 9;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .showcase-item:hover {
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 24px 55px -36px rgba(139, 92, 246, 0.45);
         }
 
         .showcase-item iframe {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            border: 0;
         }
 
         .showcase-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.7s var(--ease);
         }
 
-        .showcase-item:hover img {
-            transform: scale(1.05);
-        }
+        .showcase-item.is-image { cursor: zoom-in; }
+        .showcase-item.is-image:hover img { transform: scale(1.055); }
 
-        /* --- Rhetorische Frage --- */
-        .rhetorical-question {
-            text-align: center;
-            padding: 6rem 2rem 2rem 2rem;
-        }
-
-        .rhetorical-question h2 {
-            border: none;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            color: var(--text-main);
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-
-        .rhetorical-question p {
-            color: var(--accent);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-size: 0.9rem;
-        }
-
-        /* --- Contact & Footer --- */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background-color: var(--surface-color);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .social-links a:hover {
-            background-color: var(--surface-hover);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* --- Lightbox --- */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .lightbox-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        }
-
-        .lightbox-close {
+        .showcase-item.is-image::after {
+            content: "View";
             position: absolute;
-            top: -40px;
-            right: 0;
-            background: none;
-            border: none;
+            right: 0.9rem;
+            bottom: 0.9rem;
+            padding: 0.32rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(8, 9, 13, 0.72);
+            backdrop-filter: blur(8px);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             color: #fff;
-            font-size: 2rem;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .showcase-item.is-image:hover::after,
+        .showcase-item.is-image:focus-visible::after { opacity: 1; transform: none; }
+
+        /* =========================================================
+           17. CTA Band
+           ========================================================= */
+        .cta {
+            position: relative;
+            text-align: center;
+            padding: clamp(5rem, 11vw, 8.5rem) 24px;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(760px, 90vw);
+            height: 340px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(closest-side, rgba(139, 92, 246, 0.2), transparent 75%);
+            pointer-events: none;
+        }
+
+        .cta h2 {
+            position: relative;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            letter-spacing: -0.035em;
+            margin-bottom: 0.9rem;
+        }
+
+        .cta p {
+            position: relative;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+        }
+
+        /* =========================================================
+           18. Contact
+           ========================================================= */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 0.95rem;
+            padding: 1.05rem 1.2rem;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s var(--ease);
+        }
+
+        .contact-card:hover,
+        .contact-card:focus-visible {
+            color: var(--text-strong);
+            border-color: rgba(139, 92, 246, 0.45);
+            background: var(--surface-2);
+            transform: translateY(-2px);
+        }
+
+        .contact-card__icon {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.22);
+            color: var(--accent-light);
+            flex-shrink: 0;
+        }
+
+        .contact-card__icon svg { width: 19px; height: 19px; }
+
+        .contact-card__text { min-width: 0; }
+
+        .contact-card__text strong {
+            display: block;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: inherit;
+            line-height: 1.35;
+        }
+
+        .contact-card__text span {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-card__arrow {
+            margin-left: auto;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 1rem;
+            transition: transform 0.3s var(--ease), color 0.3s ease;
+        }
+
+        .contact-card:hover .contact-card__arrow {
+            color: var(--accent-light);
+            transform: translateX(3px);
+        }
+
+        /* =========================================================
+           19. Footer
+           ========================================================= */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 2.2rem 0;
+            background: rgba(7, 8, 11, 0.6);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .site-footer p {
+            margin: 0;
+            font-size: 0.84rem;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-links a {
+            font-size: 0.83rem;
+            color: var(--muted);
+        }
+        .footer-links a:hover { color: var(--text-strong); }
+
+        /* =========================================================
+           20. Lightbox
+           ========================================================= */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 72px;
+            background: rgba(4, 5, 8, 0.93);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .lightbox.is-open { opacity: 1; visibility: visible; }
+
+        .lightbox__stage {
+            margin: 0;
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.9rem;
+            transform: scale(0.97);
+            transition: transform 0.35s var(--ease);
+        }
+
+        .lightbox.is-open .lightbox__stage { transform: scale(1); }
+
+        .lightbox__stage img {
+            max-width: 100%;
+            max-height: 78vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 70px rgba(0, 0, 0, 0.9);
+        }
+
+        .lightbox__caption {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        .lightbox__close,
+        .lightbox__nav {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1.4rem;
+            line-height: 1;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
         }
 
-        .lightbox-close:hover {
-            color: var(--accent);
+        .lightbox__close:hover,
+        .lightbox__nav:hover {
+            background: rgba(139, 92, 246, 0.22);
+            border-color: rgba(139, 92, 246, 0.55);
+            color: #fff;
         }
 
-        /* --- Media Queries --- */
-        @media (max-width: 768px) {
+        .lightbox__close { top: 20px; right: 20px; }
+        .lightbox__nav--prev { left: 16px; top: 50%; transform: translateY(-50%); }
+        .lightbox__nav--next { right: 16px; top: 50%; transform: translateY(-50%); }
+
+        /* =========================================================
+           21. Responsive
+           ========================================================= */
+        @media (max-width: 1024px) {
+            .hero__inner { grid-template-columns: minmax(0, 1fr); }
+            .hero__card { max-width: 480px; }
+            .project--wide { grid-template-columns: minmax(0, 1fr); }
+            .project--wide .media { min-height: 0; aspect-ratio: 16 / 9; }
+            .project--dm .dm-grid { order: 2; }
+        }
+
+        @media (max-width: 900px) {
+            .menu-btn { display: grid; }
+
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--surface-color);
+                position: fixed;
+                top: 84px;
+                left: 16px;
+                right: 16px;
                 flex-direction: column;
-                padding: 1rem 0;
-                border-bottom: 1px solid var(--border-color);
+                align-items: stretch;
+                gap: 0.15rem;
+                padding: 0.6rem;
+                border-radius: 16px;
+                border: 1px solid var(--border);
+                background: rgba(11, 13, 19, 0.98);
+                backdrop-filter: blur(20px);
+                box-shadow: 0 30px 60px -30px #000;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: opacity 0.28s ease, transform 0.28s var(--ease), visibility 0.28s;
             }
 
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links li {
-                width: 100%;
-                text-align: center;
+            .nav-links.is-open {
+                opacity: 1;
+                visibility: visible;
+                transform: none;
             }
 
             .nav-links a {
-                display: block;
-                padding: 1rem;
+                padding: 0.8rem 1rem;
+                font-size: 0.95rem;
             }
 
-            .mobile-menu-btn {
-                display: block;
-            }
+            .projects__pair { grid-template-columns: minmax(0, 1fr); }
+        }
 
-            .hero-buttons {
-                flex-direction: column;
-            }
+        @media (max-width: 780px) {
+            html { scroll-padding-top: 84px; }
 
-            /* Evolution Timeline Mobile */
-            .evolution-container::before {
-                left: 20px;
-            }
-            .evolution-item, .evolution-item:nth-child(even) {
+            .hero { padding: 118px 0 72px; min-height: auto; }
+
+            /* Timeline -> single rail */
+            .timeline::before { left: 9px; transform: none; }
+
+            .tl-item,
+            .tl-item:nth-child(even) {
                 justify-content: flex-start;
-                padding-left: 50px;
+                padding-left: 42px;
                 padding-right: 0;
             }
-            .evolution-item::after {
-                left: 20px;
+
+            .tl-item::after {
+                left: 9px;
+                top: 24px;
+                transform: translateX(-50%);
             }
         }
 
-        /* --- Accessibility: Reduced Motion --- */
+        @media (max-width: 560px) {
+            .container { padding: 0 18px; }
+            .hero__actions .btn { width: 100%; }
+            .dm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .lightbox { padding: 64px 12px 84px; }
+            .lightbox__nav--prev { left: 8px; bottom: 18px; top: auto; transform: none; }
+            .lightbox__nav--next { right: 8px; bottom: 18px; top: auto; transform: none; }
+            .lightbox__stage img { max-height: 68vh; }
+            .footer-inner { flex-direction: column; text-align: center; }
+        }
+
+        /* =========================================================
+           22. Reduced Motion
+           ========================================================= */
         @media (prefers-reduced-motion: reduce) {
-            * {
+            html { scroll-behavior: auto; }
+
+            *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
             }
+
+            .js .reveal { opacity: 1; transform: none; }
+            .hero__content > *, .hero__card { opacity: 1; animation: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <header>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- ================= Navigation ================= -->
+    <header class="site-header" id="siteHeader">
         <div class="container nav-container">
-            <a href="#hero" class="logo">Baumeister</a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">☰</button>
+            <a href="#hero" class="logo" aria-label="Baumeister – back to top">
+                <span class="logo__mark" aria-hidden="true">B</span>
+                <span class="logo__text">
+                    Baumeister
+                    <small>Roblox Developer</small>
+                </span>
+            </a>
+
+            <button class="menu-btn" id="mobileMenuBtn" type="button"
+                    aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+                <span class="menu-btn__bars" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </span>
+            </button>
+
             <ul class="nav-links" id="navLinks">
-                <li><a href="#hero">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#evolution">Evolution</a></li>
+                <li><a href="#building">Building</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#showcase">Media</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <span class="hero-subtitle">Roblox Developer</span>
-                    <h1>Scripting, Building & Gameplay</h1>
-                    
-                    <!-- Motto -->
-                    <div class="hero-motto">
-                        Imagine it. Build it. Make it real.
-                    </div>
+    <main id="main">
 
-                    <p style="font-size: 1.2rem; max-width: 600px;">I build and test Roblox game systems, work on game environments, and collaborate with other developers. I enjoy solving technical problems and improving my skills through practical projects.</p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View Projects</a>
-                        <a href="#contact" class="btn btn-secondary">Contact / Roblox Profile</a>
+        <!-- ================= Hero ================= -->
+        <section id="hero" class="hero">
+            <div class="hero__grid" aria-hidden="true"></div>
+            <div class="container hero__inner">
+
+                <div class="hero__content">
+                    <span class="hero__eyebrow">
+                        <span class="dot" aria-hidden="true"></span>
+                        Scripting · Building · Gameplay
+                    </span>
+
+                    <h1>Imagine it.<br><span class="grad">Build it.</span><br>Make it real.</h1>
+
+                    <p class="hero__text">
+                        I build and test Roblox game systems, work on game environments, and collaborate
+                        with other developers. I enjoy solving technical problems and improving my skills
+                        through practical projects.
+                    </p>
+
+                    <div class="hero__actions">
+                        <a href="#projects" class="btn btn--primary">View Projects</a>
+                        <a href="#contact" class="btn btn--ghost">Contact / Roblox Profile</a>
                     </div>
                 </div>
+
+                <aside class="hero__card" aria-label="Quick profile overview">
+                    <div class="window-bar" aria-hidden="true">
+                        <i></i><i></i><i></i>
+                        <em>baumeister.profile</em>
+                    </div>
+                    <div class="hero__card-body">
+                        <span class="status-pill">
+                            <span class="pulse" aria-hidden="true"></span>
+                            Open to collaboration
+                        </span>
+                        <dl class="facts">
+                            <div><dt>Experience</dt><dd>~1 Year</dd></div>
+                            <div><dt>Focus</dt><dd>Scripting · Building</dd></div>
+                            <div><dt>Engine</dt><dd>Roblox Studio</dd></div>
+                            <div><dt>Studio</dt><dd>BFurSt Studios</dd></div>
+                        </dl>
+                    </div>
+                </aside>
+
             </div>
         </section>
 
-        <!-- Main Projects Section -->
-        <section id="projects">
+        <!-- ================= Main Projects ================= -->
+        <section id="projects" class="section">
             <div class="container">
-                <h2>Main Projects</h2>
-                <div class="projects-grid">
-                    
-                    <!-- Project 1: RIFTBOUND -->
-                    <article class="project-card">
-                        <div class="project-media" onclick="openLightbox('images/riftbound-portal.png', 'RIFTBOUND Portal Gameplay')">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Featured Work</span>
+                    <h2>Main Projects</h2>
+                    <p class="section-lead">
+                        A look at the projects I have built, tested and released — from solo releases
+                        to team collaborations and prototypes.
+                    </p>
+                </div>
+
+                <div class="projects">
+
+                    <!-- RIFTBOUND -->
+                    <article class="project project--wide reveal">
+                        <button class="media" type="button"
+                                data-img="images/riftbound-portal.png"
+                                data-caption="RIFTBOUND – Portal Gameplay"
+                                aria-label="Enlarge RIFTBOUND portal gameplay image">
                             <img src="images/riftbound-portal.png" alt="RIFTBOUND Portal Gameplay" loading="lazy">
-                        </div>
-                        <div class="project-info">
-                            <div class="project-header">
+                        </button>
+                        <div class="project__body">
+                            <div class="project__top">
                                 <h3>RIFTBOUND</h3>
-                                <span class="project-status status-released">Completed Release</span>
+                                <span class="badge badge--released">Completed Release</span>
                             </div>
-                            <p>A solo project that was successfully completed and released. The focus was on clean and efficient gameplay, utilizing ViewportFrames to implement the portal mechanics.</p>
-                            <div class="project-tags">
+                            <p>
+                                A solo project that was successfully completed and released. The focus was
+                                on clean and efficient gameplay, utilizing ViewportFrames to implement the
+                                portal mechanics.
+                            </p>
+                            <div class="tags">
                                 <span class="tag">Solo Project</span>
                                 <span class="tag">ViewportFrames</span>
                                 <span class="tag">Gameplay</span>
                             </div>
-                            <div style="margin-top: 1rem;">
-                                <a href="https://www.youtube.com/watch?v=O3qkQ1dXEyc" target="_blank" rel="noopener noreferrer">Watch Trailer on YouTube</a>
+                            <div class="actions">
+                                <a class="btn btn--primary btn--sm"
+                                   href="https://www.roblox.com/games/100622103973666/RIFTBOUND"
+                                   target="_blank" rel="noopener noreferrer">Play on Roblox</a>
+                                <a class="btn btn--ghost btn--sm"
+                                   href="https://www.youtube.com/watch?v=O3qkQ1dXEyc"
+                                   target="_blank" rel="noopener noreferrer">Watch Trailer</a>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Project 2: WW1 Game -->
-                    <article class="project-card">
-                        <div class="project-media" onclick="openLightbox('images/ww1-menu.png', 'WW1 Game Environment and Menu')">
-                            <img src="images/ww1-menu.png" alt="WW1 Game Environment and Menu" loading="lazy">
-                        </div>
-                        <div class="project-info">
-                            <div class="project-header">
-                                <h3>WW1 Game</h3>
-                                <span class="project-status status-past">Paused</span>
-                            </div>
-                            <p>A Roblox project developed with a team, focusing on a World War 1 game environment. The project is currently paused and was documented through short videos on my social channels.</p>
-                            <div class="project-tags">
-                                <span class="tag">Team Project</span>
-                                <span class="tag">Environment</span>
-                                <span class="tag">Paused</span>
-                            </div>
-                            <div style="margin-top: 1rem;">
-                                <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok Updates</a>
-                            </div>
-                        </div>
-                    </article>
+                    <!-- Last Battalion + Combat System -->
+                    <div class="projects__pair">
 
-                    <!-- Project 3: Combat System -->
-                    <article class="project-card">
-                        <div class="project-media" onclick="openLightbox('images/combat-system.png', 'Roblox Combat System Prototype')">
-                            <img src="images/combat-system.png" alt="Roblox Combat System Prototype" loading="lazy">
+                        <!-- Last Battalion (formerly WW1 Game) -->
+                        <article class="project reveal">
+                            <button class="media" type="button"
+                                    data-img="images/ww1-menu.png"
+                                    data-caption="Last Battalion – Environment and Menu"
+                                    aria-label="Enlarge Last Battalion environment image">
+                                <img src="images/ww1-menu.png" alt="Last Battalion Game Environment and Menu" loading="lazy">
+                            </button>
+                            <div class="project__body">
+                                <div class="project__top">
+                                    <h3>Last Battalion</h3>
+                                    <span class="badge badge--cancelled">Cancelled</span>
+                                </div>
+                                <p>
+                                    A Roblox project developed with a team, focusing on a World War 1 game
+                                    environment. The project is currently paused and was documented through
+                                    short videos on my social channels.
+                                </p>
+                                <div class="tags">
+                                    <span class="tag">Team Project</span>
+                                    <span class="tag">Environment</span>
+                                    <span class="tag">Cancelled</span>
+                                </div>
+                                <div class="actions">
+                                    <a class="btn btn--ghost btn--sm"
+                                       href="https://www.tiktok.com/@bfurstudiosofficial"
+                                       target="_blank" rel="noopener noreferrer">TikTok Updates</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Roblox Combat System -->
+                        <article class="project reveal">
+                            <button class="media" type="button"
+                                    data-img="images/combat-system.png"
+                                    data-caption="Roblox Combat System Prototype"
+                                    aria-label="Enlarge combat system prototype image">
+                                <img src="images/combat-system.png" alt="Roblox Combat System Prototype" loading="lazy">
+                            </button>
+                            <div class="project__body">
+                                <div class="project__top">
+                                    <h3>Roblox Combat System</h3>
+                                    <span class="badge badge--prototype">Prototype</span>
+                                </div>
+                                <p>
+                                    A prototype for an R15 combat system in Roblox Studio. It serves as an
+                                    interesting experiment for custom mechanics and animations.
+                                </p>
+                                <ul class="feature-list">
+                                    <li>Punch <kbd>M1</kbd></li>
+                                    <li>Fireball <kbd>E</kbd></li>
+                                    <li>Dash <kbd>Q</kbd></li>
+                                    <li>Block <kbd>F</kbd></li>
+                                </ul>
+                                <div class="tags">
+                                    <span class="tag">Prototype</span>
+                                    <span class="tag">Testing</span>
+                                    <span class="tag">Combat</span>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- DEEP MINE -->
+                    <article class="project project--wide project--dm reveal">
+                        <div class="project__body">
+                            <div class="project__top">
+                                <h3>DEEP MINE</h3>
+                                <span class="badge badge--new">New</span>
+                            </div>
+                            <p>
+                                A Roblox project built around pets, pickaxes and ores.
+                            </p>
+                            <div class="tags">
+                                <span class="tag">Pets</span>
+                                <span class="tag">Pickaxes</span>
+                                <span class="tag">Ores</span>
+                            </div>
+                            <div class="actions">
+                                <a class="btn btn--primary btn--sm"
+                                   href="https://www.roblox.com/games/96899032251703/DEEP-MINE"
+                                   target="_blank" rel="noopener noreferrer">Play on Roblox</a>
+                            </div>
                         </div>
-                        <div class="project-info">
-                            <div class="project-header">
-                                <h3>Roblox Combat System</h3>
-                                <span class="project-status status-wip">Prototype</span>
-                            </div>
-                            <p>A prototype for an R15 combat system in Roblox Studio. It serves as an interesting experiment for custom mechanics and animations.</p>
-                            <ul style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; padding-left: 1.2rem;">
-                                <li>Punch (M1)</li>
-                                <li>Fireball (E)</li>
-                                <li>Dash (Q)</li>
-                                <li>Block (F)</li>
-                            </ul>
-                            <div class="project-tags">
-                                <span class="tag">Prototype</span>
-                                <span class="tag">Testing</span>
-                                <span class="tag">Combat</span>
-                            </div>
+
+                        <div class="dm-grid">
+                            <button class="dm-shot" type="button"
+                                    data-img="images/deep-mine-pets.png"
+                                    data-caption="DEEP MINE – Pets"
+                                    aria-label="Enlarge DEEP MINE pets image">
+                                <img src="images/deep-mine-pets.png" alt="DEEP MINE Pets" loading="lazy">
+                                <span class="dm-shot__label">Pets</span>
+                            </button>
+                            <button class="dm-shot" type="button"
+                                    data-img="images/deep-mine-pickaxes.png"
+                                    data-caption="DEEP MINE – Pickaxes"
+                                    aria-label="Enlarge DEEP MINE pickaxes image">
+                                <img src="images/deep-mine-pickaxes.png" alt="DEEP MINE Pickaxes" loading="lazy">
+                                <span class="dm-shot__label">Pickaxes</span>
+                            </button>
+                            <button class="dm-shot" type="button"
+                                    data-img="images/deep-mine-ores.png"
+                                    data-caption="DEEP MINE – Ores"
+                                    aria-label="Enlarge DEEP MINE ores image">
+                                <img src="images/deep-mine-ores.png" alt="DEEP MINE Ores" loading="lazy">
+                                <span class="dm-shot__label">Ores</span>
+                            </button>
                         </div>
                     </article>
 
@@ -762,54 +1724,104 @@
             </div>
         </section>
 
-        <!-- Evolution / Previous Releases Section -->
-        <section id="evolution" style="background-color: var(--surface-color);">
+        <!-- ================= Evolution ================= -->
+        <section id="evolution" class="section section--alt">
             <div class="container">
-                <h2>The Evolution of My Games</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 4rem auto; color: var(--text-main);">
-                    My development journey started with simple ideas and has grown into more complex systems. Here is a look back at my previous releases that paved the way.
-                </p>
-                
-                <div class="evolution-container">
-                    
-                    <!-- 1. A Game About a Lamp -->
-                    <div class="evolution-item">
-                        <div class="evolution-content">
-                            <img src="images/game-lamp.png" alt="A Game About a Lamp Thumbnail" onclick="openLightbox('images/game-lamp.png', 'A Game About a Lamp')" loading="lazy">
-                            <h3>A Game About a Lamp</h3>
-                            <span class="project-status status-past" style="display: inline-block; margin-bottom: 0.5rem;">The Beginning</span>
-                            <p>The very first step of my journey. A simple, experimental game that taught me the basics of Roblox Studio and how to bring a simple concept to life.</p>
-                            <a href="https://www.roblox.com/games/99765686577474/A-Game-About-a-Lamp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">View on Roblox</a>
+                <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
+                    <span class="eyebrow" style="justify-content:center;">The Journey</span>
+                    <h2>The Evolution of My Games</h2>
+                    <p class="section-lead" style="margin:0 auto;">
+                        My development journey started with simple ideas and has grown into more complex
+                        systems. Here is a look back at my previous releases that paved the way.
+                    </p>
+                </div>
+
+                <div class="timeline">
+
+                    <!-- A Game About a Lamp -->
+                    <div class="tl-item reveal">
+                        <div class="tl-card">
+                            <button class="media" type="button"
+                                    data-img="images/game-lamp.png"
+                                    data-caption="A Game About a Lamp"
+                                    aria-label="Enlarge A Game About a Lamp thumbnail">
+                                <img src="images/game-lamp.png" alt="A Game About a Lamp Thumbnail" loading="lazy">
+                            </button>
+                            <div class="tl-card__body">
+                                <h3>A Game About a Lamp</h3>
+                                <span class="badge badge--past">The Beginning</span>
+                                <p>
+                                    The very first step of my journey. A simple, experimental game that taught
+                                    me the basics of Roblox Studio and how to bring a simple concept to life.
+                                </p>
+                                <div class="actions">
+                                    <a class="btn btn--ghost btn--sm"
+                                       href="https://www.roblox.com/games/99765686577474/A-Game-About-a-Lamp"
+                                       target="_blank" rel="noopener noreferrer">View on Roblox</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 2. Jump Master Obby -->
-                    <div class="evolution-item">
-                        <div class="evolution-content">
-                            <img src="images/jump-master.png" alt="Jump Master Obby Thumbnail" onclick="openLightbox('images/jump-master.png', 'Jump Master Obby')" loading="lazy">
-                            <h3>Jump Master Obby</h3>
-                            <span class="project-status status-past" style="display: inline-block; margin-bottom: 0.5rem;">Level Design</span>
-                            <p>Moving from a simple concept to level design. This Obby helped me understand player movement, obstacle placement, and basic game pacing.</p>
-                            <a href="https://www.roblox.com/games/125647617423531/Jump-Master-Obby" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">View on Roblox</a>
+                    <!-- Jump Master Obby -->
+                    <div class="tl-item reveal">
+                        <div class="tl-card">
+                            <button class="media" type="button"
+                                    data-img="images/jump-master.png"
+                                    data-caption="Jump Master Obby"
+                                    aria-label="Enlarge Jump Master Obby thumbnail">
+                                <img src="images/jump-master.png" alt="Jump Master Obby Thumbnail" loading="lazy">
+                            </button>
+                            <div class="tl-card__body">
+                                <h3>Jump Master Obby</h3>
+                                <span class="badge badge--past">Level Design</span>
+                                <p>
+                                    Moving from a simple concept to level design. This Obby helped me understand
+                                    player movement, obstacle placement, and basic game pacing.
+                                </p>
+                                <div class="actions">
+                                    <a class="btn btn--ghost btn--sm"
+                                       href="https://www.roblox.com/games/125647617423531/Jump-Master-Obby"
+                                       target="_blank" rel="noopener noreferrer">View on Roblox</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 3. The Escape: Cave -->
-                    <div class="evolution-item">
-                        <div class="evolution-content">
-                            <img src="images/escape-cave.png" alt="The Escape: Cave Thumbnail" onclick="openLightbox('images/escape-cave.png', 'The Escape: Cave')" loading="lazy">
-                            <h3>The Escape: Cave</h3>
-                            <span class="project-status status-past" style="display: inline-block; margin-bottom: 0.5rem;">Puzzle & Atmosphere</span>
-                            <p>Stepping into puzzle mechanics and atmospheric design. This project was about creating tension and giving the player a sense of exploration.</p>
-                            <a href="https://www.roblox.com/games/125093617746033/The-Escape-Cave" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">View on Roblox</a>
+                    <!-- The Escape: Cave -->
+                    <div class="tl-item reveal">
+                        <div class="tl-card">
+                            <button class="media" type="button"
+                                    data-img="images/escape-cave.png"
+                                    data-caption="The Escape: Cave"
+                                    aria-label="Enlarge The Escape: Cave thumbnail">
+                                <img src="images/escape-cave.png" alt="The Escape: Cave Thumbnail" loading="lazy">
+                            </button>
+                            <div class="tl-card__body">
+                                <h3>The Escape: Cave</h3>
+                                <span class="badge badge--past">Puzzle &amp; Atmosphere</span>
+                                <p>
+                                    Stepping into puzzle mechanics and atmospheric design. This project was about
+                                    creating tension and giving the player a sense of exploration.
+                                </p>
+                                <div class="actions">
+                                    <a class="btn btn--ghost btn--sm"
+                                       href="https://www.roblox.com/games/125093617746033/The-Escape-Cave"
+                                       target="_blank" rel="noopener noreferrer">View on Roblox</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 4. New Projects Mention (Text only) -->
-                    <div class="evolution-item">
-                        <div class="evolution-content" style="background-color: transparent; border: 1px dashed var(--accent); text-align: center;">
-                            <h3 style="color: var(--accent);">The Next Chapter</h3>
-                            <p>From these early projects, I moved on to more advanced systems like the WW1 Game, RIFTBOUND, and my Combat Prototypes. I am constantly working on new projects to expand my skills.</p>
+                    <!-- Next Chapter -->
+                    <div class="tl-item reveal">
+                        <div class="tl-card tl-card--next">
+                            <h3>The Next Chapter</h3>
+                            <p>
+                                From these early projects, I moved on to more advanced systems like
+                                Last Battalion, RIFTBOUND, and my Combat Prototypes. I am constantly
+                                working on new projects to expand my skills.
+                            </p>
                         </div>
                     </div>
 
@@ -817,59 +1829,101 @@
             </div>
         </section>
 
-        <!-- Building Section -->
-        <section id="building">
+        <!-- ================= Building ================= -->
+        <section id="building" class="section">
             <div class="container">
-                <h2>Building & Level Design</h2>
-                <p style="max-width: 800px; margin-bottom: 2rem;">In addition to scripting, I have extensive experience in environment design and 3D modeling. Below are 6 distinct island environments I designed and built for <strong>ENM Studios</strong>. I also created a subway station environment for a smaller personal DDR RP project with friends, which was eventually cancelled.</p>
-                
-                <!-- Grid für die 7 Building-Bilder -->
-                <div class="building-grid">
-                    <!-- Bild 1: Burg mit Portalkreis -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-castle.png', 'Detailed Castle and Portal Map (ENM Studios)')">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Environment Art</span>
+                    <h2>Building &amp; Level Design</h2>
+                    <p class="section-lead">
+                        In addition to scripting, I have extensive experience in environment design and 3D
+                        modeling. Below are 6 distinct island environments I designed and built for
+                        <strong style="color: var(--text);">ENM Studios</strong>. I also created a subway station
+                        environment for a smaller personal DDR RP project with friends, which was eventually cancelled.
+                    </p>
+                </div>
+
+                <div class="gallery">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-castle.png"
+                            data-caption="Detailed Castle and Portal Map (ENM Studios)"
+                            aria-label="Enlarge castle and portal map image">
                         <img src="images/build-castle.png" alt="Detailed Castle and Portal Map" loading="lazy">
-                    </div>
+                        <span class="tile__label">Castle &amp; Portal Map</span>
+                    </button>
 
-                    <!-- Bild 2: Insel mit Palmen und Kran -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-island.png', 'Tropical Island Level Design (ENM Studios)')">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-island.png"
+                            data-caption="Tropical Island Level Design (ENM Studios)"
+                            aria-label="Enlarge tropical island level design image">
                         <img src="images/build-island.png" alt="Tropical Island Level Design" loading="lazy">
-                    </div>
+                        <span class="tile__label">Tropical Island</span>
+                    </button>
 
-                    <!-- Bild 3: Asiatische Insel -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-asian.png', 'Asian Themed Island Environment (ENM Studios)')">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-asian.png"
+                            data-caption="Asian Themed Island Environment (ENM Studios)"
+                            aria-label="Enlarge Asian themed island environment image">
                         <img src="images/build-asian.png" alt="Asian Themed Island Environment" loading="lazy">
-                    </div>
+                        <span class="tile__label">Asian Themed Island</span>
+                    </button>
 
-                    <!-- Bild 4: Western Stadt -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-western.png', 'Western Town and NPC Setup (ENM Studios)')">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-western.png"
+                            data-caption="Western Town and NPC Setup (ENM Studios)"
+                            aria-label="Enlarge western town image">
                         <img src="images/build-western.png" alt="Western Town and NPC Setup" loading="lazy">
-                    </div>
+                        <span class="tile__label">Western Town &amp; NPCs</span>
+                    </button>
 
-                    <!-- Bild 5 Schnee-Insel -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-snow.png', 'Snow Biome Island Design (ENM Studios)')">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-snow.png"
+                            data-caption="Snow Biome Island Design (ENM Studios)"
+                            aria-label="Enlarge snow biome island image">
                         <img src="images/build-snow.png" alt="Snow Biome Island Design" loading="lazy">
-                    </div>
+                        <span class="tile__label">Snow Biome Island</span>
+                    </button>
 
-                    <!-- Bild 6 Pirat am Kran -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-pirate.png', 'Pirate NPC and Crane Detail (ENM Studios)')">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-pirate.png"
+                            data-caption="Pirate NPC and Crane Detail (ENM Studios)"
+                            aria-label="Enlarge pirate NPC and crane image">
                         <img src="images/build-pirate.png" alt="Pirate NPC and Crane Detail" loading="lazy">
-                    </div>
+                        <span class="tile__label">Pirate NPC &amp; Crane</span>
+                    </button>
 
-                    <!-- Bild 7 NEU: U-Bahn Station (DDR RP) -->
-                    <div class="showcase-item" onclick="openLightbox('images/build-subway.png', 'Subway Station Environment (Cancelled DDR RP Project)')">
+                    <button class="tile reveal" type="button"
+                            data-img="images/build-subway.png"
+                            data-caption="Subway Station Environment (Cancelled DDR RP Project)"
+                            aria-label="Enlarge subway station environment image">
                         <img src="images/build-subway.png" alt="Subway Station Environment" loading="lazy">
-                    </div>
+                        <span class="tile__label">Subway Station</span>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section id="skills" style="background-color: var(--surface-color);">
+        <!-- ================= Skills ================= -->
+        <section id="skills" class="section section--alt">
             <div class="container">
-                <h2>Skills & Focus Areas</h2>
+                <div class="section-head reveal">
+                    <span class="eyebrow">Capabilities</span>
+                    <h2>Skills &amp; Focus Areas</h2>
+                </div>
+
                 <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3>Scripting</h3>
+
+                    <div class="skill-card reveal">
+                        <div class="skill-card__head">
+                            <span class="skill-card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="8 6 3 12 8 18"></polyline>
+                                    <polyline points="16 6 21 12 16 18"></polyline>
+                                </svg>
+                            </span>
+                            <h3>Scripting</h3>
+                        </div>
                         <ul class="skill-list">
                             <li>Roblox Studio</li>
                             <li>Lua / Luau</li>
@@ -877,8 +1931,19 @@
                             <li>Basic Debugging</li>
                         </ul>
                     </div>
-                    <div class="skill-category">
-                        <h3>Building</h3>
+
+                    <div class="skill-card reveal">
+                        <div class="skill-card__head">
+                            <span class="skill-card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 20h18"></path>
+                                    <path d="M5 20V9l7-5 7 5v11"></path>
+                                    <path d="M10 20v-6h4v6"></path>
+                                </svg>
+                            </span>
+                            <h3>Building</h3>
+                        </div>
                         <ul class="skill-list">
                             <li>Roblox Studio Building</li>
                             <li>Level Design</li>
@@ -886,25 +1951,42 @@
                             <li>3D Modeling</li>
                         </ul>
                     </div>
-                    <div class="skill-category">
-                        <h3>Development</h3>
+
+                    <div class="skill-card reveal">
+                        <div class="skill-card__head">
+                            <span class="skill-card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3v4"></path>
+                                    <path d="M5.6 5.6l2.8 2.8"></path>
+                                    <path d="M3 12h4"></path>
+                                    <circle cx="12" cy="15" r="6"></circle>
+                                </svg>
+                            </span>
+                            <h3>Development</h3>
+                        </div>
                         <ul class="skill-list">
                             <li>Game Testing</li>
-                            <li>Reproducing & Investigating Bugs</li>
+                            <li>Reproducing &amp; Investigating Bugs</li>
                             <li>Team Collaboration</li>
-                            <li>Using Tutorials & AI for Learning</li>
+                            <li>Using Tutorials &amp; AI for Learning</li>
                             <li>Basic Python</li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about">
+        <!-- ================= About ================= -->
+        <section id="about" class="section">
             <div class="container">
-                <h2>About Me</h2>
-                <div class="about-content">
+                <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
+                    <span class="eyebrow" style="justify-content:center;">About</span>
+                    <h2>About Me</h2>
+                </div>
+
+                <div class="about reveal">
                     <p>I'm a Roblox developer with around one year of experience, focusing on scripting, gameplay mechanics, and building.</p>
                     <p>I enjoy creating and testing game systems, solving technical problems, and collaborating with other developers on projects.</p>
                     <p>I use tutorials and AI tools as learning aids while testing, adapting, and learning from the code I work with. I'm always looking to improve my skills and contribute to interesting Roblox projects.</p>
@@ -912,142 +1994,466 @@
             </div>
         </section>
 
-        <!-- Video & Image Showcase -->
-        <section id="showcase" style="background-color: var(--surface-color);">
+        <!-- ================= Media Showcase ================= -->
+        <section id="showcase" class="section section--alt">
             <div class="container">
-                <h2>Media Showcase</h2>
+                <div class="section-head reveal">
+                    <span class="eyebrow">Media</span>
+                    <h2>Media Showcase</h2>
+                    <p class="section-lead">Trailers, prototype footage and in-editor impressions of my work.</p>
+                </div>
+
                 <div class="showcase-grid">
-                    
-                    <!-- Video 1: RIFTBOUND Trailer -->
-                    <div class="showcase-item">
-                        <iframe src="https://www.youtube-nocookie.com/embed/O3qkQ1dXEyc" title="RIFTBOUND Trailer" allowfullscreen loading="lazy"></iframe>
+                    <div class="showcase-item reveal">
+                        <iframe src="https://www.youtube-nocookie.com/embed/O3qkQ1dXEyc"
+                                title="RIFTBOUND Trailer" loading="lazy" allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                     </div>
 
-                    <!-- Video 2: WW1 Character Selection -->
-                    <div class="showcase-item">
-                        <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c" title="WW1 Character Selection" allowfullscreen loading="lazy"></iframe>
+                    <div class="showcase-item reveal">
+                        <iframe src="https://www.youtube-nocookie.com/embed/cCkhV5akp3c"
+                                title="WW1 Character Selection" loading="lazy" allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                     </div>
 
-                    <!-- Video 3: Combat System -->
-                    <div class="showcase-item">
-                        <iframe src="https://www.youtube-nocookie.com/embed/j4Naz01Spyk" title="Combat System Prototype" allowfullscreen loading="lazy"></iframe>
+                    <div class="showcase-item reveal">
+                        <iframe src="https://www.youtube-nocookie.com/embed/j4Naz01Spyk"
+                                title="Combat System Prototype" loading="lazy" allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                     </div>
 
-                    <!-- Bild 1 (Formular / UI) -->
-                    <div class="showcase-item" onclick="openLightbox('images/ww1-form.png', 'WW1 Conscription Document UI')">
+                    <button class="showcase-item is-image reveal" type="button"
+                            data-img="images/ww1-form.png"
+                            data-caption="WW1 Conscription Document UI"
+                            aria-label="Enlarge WW1 conscription document UI image">
                         <img src="images/ww1-form.png" alt="WW1 Conscription Document UI" loading="lazy">
-                    </div>
+                    </button>
 
-                    <!-- Bild 4 (Studio Scripting) -->
-                    <div class="showcase-item" onclick="openLightbox('images/studio-scripting.png', 'Combat System Scripting in Roblox Studio')">
+                    <button class="showcase-item is-image reveal" type="button"
+                            data-img="images/studio-scripting.png"
+                            data-caption="Combat System Scripting in Roblox Studio"
+                            aria-label="Enlarge combat system scripting image">
                         <img src="images/studio-scripting.png" alt="Combat System Scripting in Roblox Studio" loading="lazy">
-                    </div>
-                    
-                    <!-- Bild 5 (Studio Map) -->
-                    <div class="showcase-item" onclick="openLightbox('images/studio-map.png', 'Roblox Studio Map and Level Design')">
-                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
-                    </div>
+                    </button>
 
+                    <button class="showcase-item is-image reveal" type="button"
+                            data-img="images/studio-map.png"
+                            data-caption="Roblox Studio Map and Level Design"
+                            aria-label="Enlarge Roblox Studio map image">
+                        <img src="images/studio-map.png" alt="Roblox Studio Map and Level Design" loading="lazy">
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Rhetorische Frage (Abschluss vor dem Kontakt) -->
-        <div class="rhetorical-question">
+        <!-- ================= CTA ================= -->
+        <div class="cta">
             <h2>What could you create next?</h2>
             <p>Let's build something great together.</p>
         </div>
 
-        <!-- Contact Section -->
-        <section id="contact">
+        <!-- ================= Contact ================= -->
+        <section id="contact" class="section" style="padding-top:0;">
             <div class="container">
-                <h2>Get in Touch</h2>
-                <p style="text-align: center; margin-bottom: 2rem; color: var(--text-main);">You can reach out to me through any of the platforms below.</p>
-                <div class="social-links">
-                    <a href="https://www.roblox.com/users/1099239540/profile" target="_blank" rel="noopener noreferrer">Roblox Profile</a>
-                    <a href="https://github.com/Baumeister-create" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://www.youtube.com/@T-Fails" target="_blank" rel="noopener noreferrer">YouTube</a>
-                    <a href="https://www.tiktok.com/@bfurstudiosofficial" target="_blank" rel="noopener noreferrer">TikTok</a>
-                    <a href="https://discord.com/users/tfailing1005175107955728415" target="_blank" rel="noopener noreferrer">Discord</a>
+                <div class="section-head reveal">
+                    <span class="eyebrow">Contact</span>
+                    <h2>Get in Touch</h2>
+                    <p class="section-lead">You can reach out to me through any of the platforms below.</p>
+                </div>
+
+                <div class="contact-grid">
+
+                    <a class="contact-card reveal" href="https://www.roblox.com/users/1099239540/profile"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="4"></circle>
+                                <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>Roblox Profile</strong>
+                            <span>Baumeister</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="contact-card reveal" href="https://www.roblox.com/communities/691365910/BFurSt-Studios#!/about"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="8" r="3.2"></circle>
+                                <path d="M2.5 20c0-3.3 2.9-5 6.5-5s6.5 1.7 6.5 5"></path>
+                                <path d="M17 5.2a3.2 3.2 0 0 1 0 6"></path>
+                                <path d="M18.5 15.4c2 .5 3.2 1.9 3.2 4.1"></path>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>BFurSt Studios</strong>
+                            <span>Roblox Community</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="contact-card reveal" href="https://github.com/Baumeister-create"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>GitHub</strong>
+                            <span>Baumeister-create</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="contact-card reveal" href="https://github.com/Baumeister-create/baumeister-create.github.io"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>Repository</strong>
+                            <span>baumeister-create.github.io</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="contact-card reveal" href="https://www.youtube.com/@T-Fails"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect>
+                                <path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="currentColor" stroke="none"></path>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>YouTube</strong>
+                            <span>@T-Fails</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="contact-card reveal" href="https://www.tiktok.com/@bfurstudiosofficial"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="8.5" cy="17" r="3.5"></circle>
+                                <path d="M12 17V4.5"></path>
+                                <path d="M12 5.2c.6 2.6 2.4 4.2 5 4.5"></path>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>TikTok</strong>
+                            <span>@bfurstudiosofficial</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="contact-card reveal" href="https://discord.com/users/tfailing1005175107955728415"
+                       target="_blank" rel="noopener noreferrer">
+                        <span class="contact-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 15.5A8.5 8.5 0 1 1 8.5 4a8.4 8.4 0 0 1 4 .99"></path>
+                                <path d="M20 4l-9 9"></path>
+                                <path d="M15 4h5v5"></path>
+                            </svg>
+                        </span>
+                        <span class="contact-card__text">
+                            <strong>Discord</strong>
+                            <span>tfailing</span>
+                        </span>
+                        <span class="contact-card__arrow" aria-hidden="true">↗</span>
+                    </a>
+
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="year"></span> Baumeister | Roblox Developer Portfolio. All rights reserved.</p>
+    <!-- ================= Footer ================= -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; <span id="year">2025</span> Baumeister | Roblox Developer Portfolio. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="https://www.roblox.com/games/100622103973666/RIFTBOUND" target="_blank" rel="noopener noreferrer">RIFTBOUND</a></li>
+                <li><a href="https://www.roblox.com/games/96899032251703/DEEP-MINE" target="_blank" rel="noopener noreferrer">DEEP MINE</a></li>
+                <li><a href="https://github.com/Baumeister-create" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                <li><a href="#hero">Back to top</a></li>
+            </ul>
         </div>
     </footer>
 
-    <!-- Lightbox for Images -->
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image Viewer">
-        <div class="lightbox-content">
-            <button class="lightbox-close" id="lightboxClose" aria-label="Close Image Viewer">&times;</button>
-            <img id="lightboxImg" src="" alt="Enlarged view">
-        </div>
+    <!-- ================= Lightbox ================= -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="lightbox__close" id="lightboxClose" type="button" aria-label="Close image viewer">&times;</button>
+        <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" type="button" aria-label="Previous image">&#8249;</button>
+        <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="Next image">&#8250;</button>
+        <figure class="lightbox__stage">
+            <img id="lightboxImg" src="" alt="">
+            <figcaption class="lightbox__caption" id="lightboxCaption"></figcaption>
+        </figure>
     </div>
 
-    <!-- JavaScript -->
+    <!-- ================= JavaScript ================= -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Dynamic Year for Footer ---
-            document.getElementById('year').textContent = new Date().getFullYear();
+        (function () {
+            'use strict';
 
-            // --- Mobile Menu Toggle ---
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const navLinks = document.getElementById('navLinks');
+            var doc = document;
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                const isExpanded = navLinks.classList.contains('active');
-                mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
-            });
+            /* -----------------------------------------------------
+               1. Dynamic footer year
+               ----------------------------------------------------- */
+            var yearEl = doc.getElementById('year');
+            if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
 
-            // Close mobile menu when a link is clicked
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            /* -----------------------------------------------------
+               2. Header state + scroll progress
+               ----------------------------------------------------- */
+            var header = doc.getElementById('siteHeader');
+            var progress = doc.getElementById('scrollProgress');
+
+            function onScroll() {
+                var y = window.pageYOffset || doc.documentElement.scrollTop;
+                if (header) { header.classList.toggle('is-scrolled', y > 10); }
+                if (progress) {
+                    var max = doc.documentElement.scrollHeight - window.innerHeight;
+                    var ratio = max > 0 ? Math.min(y / max, 1) : 0;
+                    progress.style.transform = 'scaleX(' + ratio + ')';
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            /* -----------------------------------------------------
+               3. Mobile navigation
+               ----------------------------------------------------- */
+            var menuBtn = doc.getElementById('mobileMenuBtn');
+            var navLinks = doc.getElementById('navLinks');
+
+            function closeMenu() {
+                if (!navLinks || !menuBtn) { return; }
+                navLinks.classList.remove('is-open');
+                menuBtn.classList.remove('is-active');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            }
+
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', function () {
+                    var open = navLinks.classList.toggle('is-open');
+                    menuBtn.classList.toggle('is-active', open);
+                    menuBtn.setAttribute('aria-expanded', String(open));
                 });
-            });
 
-            // --- Lightbox Functionality ---
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightboxImg');
-            const lightboxClose = document.getElementById('lightboxClose');
+                // Close after choosing a link
+                Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (link) {
+                    link.addEventListener('click', closeMenu);
+                });
 
-            window.openLightbox = function(imageSrc, imageAlt) {
-                lightboxImg.src = imageSrc;
-                lightboxImg.alt = imageAlt || 'Enlarged view';
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                // Close on outside click
+                doc.addEventListener('click', function (e) {
+                    if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) { closeMenu(); }
+                });
+
+                // Close on Escape
+                doc.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') { closeMenu(); }
+                });
+
+                // Close when resizing up to desktop
+                window.addEventListener('resize', function () {
+                    if (window.innerWidth > 900) { closeMenu(); }
+                });
+            }
+
+            /* -----------------------------------------------------
+               4. Active navigation link on scroll
+               ----------------------------------------------------- */
+            var sectionEls = Array.prototype.slice.call(doc.querySelectorAll('main section[id]'));
+            var linkById = {};
+            if (navLinks) {
+                Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (link) {
+                    var id = link.getAttribute('href');
+                    if (id && id.charAt(0) === '#') { linkById[id.slice(1)] = link; }
+                });
+            }
+
+            if ('IntersectionObserver' in window && sectionEls.length) {
+                var navObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) { return; }
+                        Object.keys(linkById).forEach(function (key) {
+                            linkById[key].classList.remove('is-active');
+                        });
+                        var active = linkById[entry.target.id];
+                        if (active) { active.classList.add('is-active'); }
+                    });
+                }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+                sectionEls.forEach(function (section) { navObserver.observe(section); });
+            }
+
+            /* -----------------------------------------------------
+               5. Scroll reveal
+               ----------------------------------------------------- */
+            var revealEls = Array.prototype.slice.call(doc.querySelectorAll('.reveal'));
+
+            if (reduceMotion || !('IntersectionObserver' in window)) {
+                revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+            } else {
+                var counters = new Map();
+
+                var revealObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) { return; }
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+                revealEls.forEach(function (el) {
+                    var parent = el.parentElement;
+                    var index = counters.get(parent) || 0;
+                    counters.set(parent, index + 1);
+                    el.style.transitionDelay = Math.min(index, 5) * 70 + 'ms';
+
+                    // Reset the delay once the entrance is done so later transitions stay snappy
+                    el.addEventListener('transitionend', function () {
+                        el.style.transitionDelay = '0ms';
+                    }, { once: true });
+
+                    revealObserver.observe(el);
+                });
+            }
+
+            /* -----------------------------------------------------
+               6. Lightbox (with gallery navigation)
+               ----------------------------------------------------- */
+            var lightbox = doc.getElementById('lightbox');
+            var lightboxImg = doc.getElementById('lightboxImg');
+            var lightboxCaption = doc.getElementById('lightboxCaption');
+            var lightboxClose = doc.getElementById('lightboxClose');
+            var lightboxPrev = doc.getElementById('lightboxPrev');
+            var lightboxNext = doc.getElementById('lightboxNext');
+            var items = Array.prototype.slice.call(doc.querySelectorAll('[data-img]'));
+            var currentIndex = -1;
+            var lastFocused = null;
+
+            function showItem(index) {
+                if (!items.length) { return; }
+                currentIndex = (index + items.length) % items.length;
+                var item = items[currentIndex];
+                var caption = item.getAttribute('data-caption') || '';
+                var innerImg = item.querySelector('img');
+
+                lightboxImg.src = item.getAttribute('data-img');
+                lightboxImg.alt = caption || (innerImg ? innerImg.alt : 'Enlarged image');
+                lightboxCaption.textContent = caption;
+
+                var multiple = items.length > 1;
+                lightboxPrev.style.display = multiple ? '' : 'none';
+                lightboxNext.style.display = multiple ? '' : 'none';
+            }
+
+            function openLightboxElement(index) {
+                lastFocused = doc.activeElement;
+                showItem(index);
+                lightbox.classList.add('is-open');
+                doc.body.classList.add('no-scroll');
+                lightboxClose.focus({ preventScroll: true });
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('is-open');
+                doc.body.classList.remove('no-scroll');
+                window.setTimeout(function () {
+                    if (!lightbox.classList.contains('is-open')) { lightboxImg.src = ''; }
+                }, 320);
+                if (lastFocused && typeof lastFocused.focus === 'function') {
+                    lastFocused.focus({ preventScroll: true });
+                }
+            }
+
+            // Public API kept for backwards compatibility
+            window.openLightbox = function (src, caption) {
+                var idx = -1;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].getAttribute('data-img') === src) { idx = i; break; }
+                }
+                if (idx === -1) {
+                    lastFocused = doc.activeElement;
+                    lightboxImg.src = src;
+                    lightboxImg.alt = caption || 'Enlarged image';
+                    lightboxCaption.textContent = caption || '';
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                    currentIndex = -1;
+                    lightbox.classList.add('is-open');
+                    doc.body.classList.add('no-scroll');
+                    lightboxClose.focus({ preventScroll: true });
+                } else {
+                    openLightboxElement(idx);
+                }
             };
 
-            const closeLightbox = () => {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-                setTimeout(() => {
-                    lightboxImg.src = '';
-                }, 300);
-            };
-
-            lightboxClose.addEventListener('click', closeLightbox);
-            
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
+            // Bind triggers
+            items.forEach(function (item, index) {
+                item.addEventListener('click', function () { openLightboxElement(index); });
             });
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                    closeLightbox();
-                }
+            if (lightbox) {
+                lightboxClose.addEventListener('click', closeLightbox);
+
+                lightboxPrev.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    showItem(currentIndex - 1);
+                });
+
+                lightboxNext.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    showItem(currentIndex + 1);
+                });
+
+                // Backdrop click closes
+                lightbox.addEventListener('click', function (e) {
+                    if (e.target === lightbox) { closeLightbox(); }
+                });
+
+                // Keyboard controls
+                doc.addEventListener('keydown', function (e) {
+                    if (!lightbox.classList.contains('is-open')) { return; }
+                    if (e.key === 'Escape') { closeLightbox(); }
+                    else if (e.key === 'ArrowLeft' && currentIndex !== -1) { showItem(currentIndex - 1); }
+                    else if (e.key === 'ArrowRight' && currentIndex !== -1) { showItem(currentIndex + 1); }
+                });
+            }
+
+            /* -----------------------------------------------------
+               7. Graceful fallback for images not yet added
+                  (currently only the DEEP MINE screenshots)
+               ----------------------------------------------------- */
+            Array.prototype.forEach.call(doc.querySelectorAll('.dm-shot img'), function (img) {
+                img.addEventListener('error', function () {
+                    img.style.opacity = '0';
+                });
+                if (img.complete && img.naturalWidth === 0) { img.style.opacity = '0'; }
             });
-        });
+
+        })();
     </script>
 </body>
 </html>
