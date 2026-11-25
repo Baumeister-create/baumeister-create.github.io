@@ -724,6 +724,24 @@
             box-shadow: 0 28px 60px -34px rgba(139, 92, 246, 0.55), 0 20px 50px -34px #000;
         }
 
+        /* --- FEATURED: RIFTBOUND --- */
+        .project-card--featured {
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 0 30px -10px rgba(139, 92, 246, 0.15);
+        }
+        .project-card--featured:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 40px -5px rgba(139, 92, 246, 0.25), 0 20px 50px -34px #000;
+        }
+
+        /* --- LESS PROMINENT: DEEP MINE --- */
+        .project-card--dm {
+            opacity: 0.9;
+        }
+        .project-card--dm:hover {
+            opacity: 1;
+        }
+
         .project-card__media {
             position: relative;
             min-height: 320px;
@@ -797,12 +815,12 @@
         }
         .project-card--dm .project-card__media img {
             object-fit: contain;
-            padding: 2.5rem;
+            padding: 3.5rem; /* Increased padding makes the image smaller and less dominant */
             filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.8));
             transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
         }
         .project-card--dm .project-card__media:hover img {
-            transform: scale(1.08) translateY(-5px);
+            transform: scale(1.05) translateY(-5px);
             filter: drop-shadow(0 25px 40px rgba(139, 92, 246, 0.4));
         }
 
@@ -1621,8 +1639,8 @@
 
                 <div class="projects">
 
-                    <!-- RIFTBOUND -->
-                    <article class="project-card reveal">
+                    <!-- RIFTBOUND (FEATURED) -->
+                    <article class="project-card project-card--featured reveal">
                         <button class="project-card__media" type="button"
                                 data-img="images/riftbound-portal.png"
                                 data-caption="RIFTBOUND – Portal Gameplay"
@@ -1633,6 +1651,7 @@
                             <div class="project-meta">
                                 <span class="badge badge--released">Released</span>
                                 <time datetime="2026-10-25">Oct 25, 2026</time>
+                                <span class="badge badge--new" style="background: rgba(139, 92, 246, 0.25); border-color: rgba(139, 92, 246, 0.5);">Featured</span>
                             </div>
                             <h3>RIFTBOUND</h3>
                             <p>
@@ -1656,7 +1675,7 @@
                         </div>
                     </article>
 
-                    <!-- DEEP MINE -->
+                    <!-- DEEP MINE (LESS PROMINENT) -->
                     <article class="project-card project-card--dm reveal">
                         <button class="project-card__media" type="button"
                                 data-img="images/deep-mine-icon.png"
@@ -1668,7 +1687,6 @@
                             <div class="project-meta">
                                 <span class="badge badge--released">Released</span>
                                 <time datetime="2026-10-31">Oct 31, 2026</time>
-                                <span class="badge badge--new">Latest</span>
                             </div>
                             <h3>DEEP MINE</h3>
                             <p>
@@ -1705,7 +1723,7 @@
                                 <span class="tag">Ores</span>
                             </div>
                             <div class="actions">
-                                <a class="btn btn--primary btn--sm"
+                                <a class="btn btn--ghost btn--sm"
                                    href="https://www.roblox.com/games/96899032251703/DEEP-MINE"
                                    target="_blank" rel="noopener noreferrer">Play on Roblox</a>
                             </div>
